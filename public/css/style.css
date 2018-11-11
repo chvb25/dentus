@@ -42,7 +42,12 @@ File: scss
   -webkit-transform: rotate(45deg);
   -o-transform: rotate(45deg);
   -moz-transform: rotate(45deg); }
-
+.client-name{
+  color: #fff;
+  font-size: 2.5em;
+  font-weight: bold;
+  padding: 0 25px;
+}
 /*******************************/
 /*******************************/
 /**
@@ -580,6 +585,10 @@ label {
   display: inline-block;
   margin-bottom: 0.5rem; }
 
+.label-required:after{
+  content: ' *';
+  color: #ff0000;
+}
 button {
   border-radius: 0; }
 
@@ -1742,6 +1751,10 @@ pre {
   .table .table {
     background-color: #eef5f9; }
 
+td.actions{
+  display: inline-flex;  }
+form.actions{
+  padding: 0 15px;  }
 .table-sm th,
 .table-sm td {
   padding: 0.3rem; }
@@ -9232,13 +9245,17 @@ sidebar navigation
       /*background: rgba(0, 0, 0, 0.04);*/
       opacity: 1; }
     .sidebar-nav ul .sidebar-item .first-level {
-      padding: 0 0 10px 0; }
+      padding-left: 15px; }
       .sidebar-nav ul .sidebar-item .first-level .sidebar-item.active .sidebar-link {
         opacity: 1; }
       .sidebar-nav ul .sidebar-item .first-level .sidebar-item .sidebar-link {
         padding: 10px 15px; }
         .sidebar-nav ul .sidebar-item .first-level .sidebar-item .sidebar-link i {
           font-size: 14px; }
+    .second-level{
+      padding-left: 25px !important;
+    }
+
   .sidebar-nav ul .nav-small-cap {
     font-size: 12px;
     padding: 14px 15px;

@@ -33,25 +33,31 @@
                                 <tr role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="zero_config" aria-sort="ascending">#</th>
                                     <th class="sorting" tabindex="0" aria-controls="zero_config">Name</th>
-                                    <th class="sorting" tabindex="0" aria-controls="zero_config">Actions</th>
+                                    <th class="sorting" tabindex="0" aria-controls="zero_config">Language</th>
+                                    <th>-</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <?php $index = 1; ?>
                                 @foreach($data as $rows)
                                     <tr>
-                                        <th role="row">1</th>
+                                        <th role="row"><?php echo $index; ?></th>
                                         <td>{{ $rows->name }}</td>
-                                        <td>
-                                            <form action="/question-type/{{ $task->id }}" method="POST">
+                                        <td>@if( $rows->language == 'en') {{ 'English' }} @elseif( $rows->language == 'es') {{ 'Español' }} @endif</td>
+                                        <td class="actions">
+                                            <button type="submit" class="btn btn-primary" onclick="location.href='question-type-edit/{{ $rows->id }}'">
+                                                <i class="fas fa-sync"></i> Update
+                                            </button>
+                                            <form action="/question-type/delete/{{ $rows->id }}" method="POST" class="actions">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
-
                                                 <button type="submit" class="btn btn-danger">
-                                                    <i class="fa fa-trash"></i>Delete
+                                                    <i class="fa fa-trash"></i> Delete
                                                 </button>
                                             </form>
                                         </td>
                                     </tr>
+                                    <?php $index++; ?>
                                 @endforeach
                                 </tbody>
                             </table>
