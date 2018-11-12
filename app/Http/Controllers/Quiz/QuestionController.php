@@ -3,24 +3,25 @@
 namespace App\Http\Controllers\Quiz;
 
 use App\Http\Controllers\Controller;
+use App\Question;
 use App\Question_Type;
 use Illuminate\Support\Facades\Session;
 use Validator;
 use Illuminate\Http\Request;
 
-class Question extends Controller
+class QuestionController extends Controller
 {
     public function index(){
-        return view('quiz.question', ['data' => Question_Type::orderBy('id', 'asc')->get()]);
+        return view('quiz.question', ['data' => Question::orderBy('id', 'asc')->get()]);
     }
 
     public function toRegister(){
-        return view('quiz.question-new');
+        return view('quiz.question-new', ['qt' => Question_Type::orderBy('id', 'asc')->get()]);
     }
 
     public  function toUpdate($id){
-        $qt = Question_Type::findOrFail($id);
-        return view('quiz.question-edit', ['qt' => $qt]);
+        $qs = Question::findOrFail($id);
+        return view('quiz.question-edit', ['qs' => $qs, 'qt' => Question_Type::orderBy('id', 'asc')->get()]);
     }
 
     /**
@@ -31,9 +32,10 @@ class Question extends Controller
     public function save(Request $request){
         $this->validateData($request, '/question/new');
 
-        $qt = new Question_Type();
-        $qt->name = $request->name;
-        $qt->language = $request->language;
+        $qt = new Question();
+        $qt->question = $request->question;
+        $qt->question_type_id = $request->question_type;
+        $qt->test_id = 1;
         $qt->save();
 
         Session::push('success','Saved data.');
@@ -47,14 +49,15 @@ class Question extends Controller
      * @return reditect to de list of the object
      */
     public function update(Request $request, $id){
-        if(Question_Type::where('id','=', $id)->first() === null){
+        if(Question::where('id','=', $id)->first() === null){
             Session::push('error','Element not found.');
         }else{
-            $this->validateData($request, '/question-eidt/'. $id);
+            $this->validateData($request, '/question-edit/'. $id);
 
-            $qt = Question_Type::findOrFail($id);
-            $qt->name = $request->name;
-            $qt->language = $request->language;
+            $qt = Question::findOrFail($id);
+            $qt->question = $request->question;
+            $qt->question_type_id = $request->question_type;
+            $qt->test_id = 1;
             $qt->save();
         }
         Session::push('success','Updated data.');
@@ -67,10 +70,10 @@ class Question extends Controller
      * @return reditect to de list of the object
      */
     public function delete($id){
-        if(Question_Type::where('id','=', $id)->first() === null){
+        if(Question::where('id','=', $id)->first() === null){
             Session::push('error','Element not found.');
         }else{
-            Question_Type::findOrFail($id)->delete();
+            Question::findOrFail($id)->delete();
             Session::push('success','Deleted data.');
         }
         return redirect('/questions');
@@ -84,8 +87,8 @@ class Question extends Controller
      */
     private function validateData(Request $request, $redirect){
         $validator = Validator::make($request->all(),
-            ['name'=>'required|min:5|max:50',
-                'language'=>'required|not_in:0']);
+            ['question'=>'required|min:5|max:100',
+                'question_type'=>'required|not_in:0']);
 
         if($validator->fails()){
             Session::push('error','message');

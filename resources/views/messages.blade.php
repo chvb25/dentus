@@ -38,7 +38,7 @@
             message = message.substring(0, message.length - 5);
             toastr.error(message, 'Something went wrong!', {fadeAway: 10000});
             {{ var_dump(Session::forget('error')) }};
-        @else
+        @elseif(Session::has('warning'))
             @foreach(Session::pull('warning') as $message)
                 toastr.warning( "{{ $message }}", "Oops!");
             @endforeach

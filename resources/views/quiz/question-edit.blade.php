@@ -21,23 +21,25 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <form class="form-horizontal" action="{{ url('update-qt') }}/{{ $qt->id }}" method="post">
+                <form class="form-horizontal" action="{{ url('update-q') }}/{{ $qs->id }}" method="post">
                     @csrf
                     {{ method_field('PUT') }}
                     <div class="card-body">
                         <h4 class="card-title">Information</h4>
                         <div class="form-group row justify-content-start">
-                            <label for="name" class="col-sm-1 text-right control-label col-form-label label-required">Name</label>
+                            <label for="question" class="col-sm-1 text-right control-label col-form-label label-required">Question</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" name="name" placeholder="Name Here" value="{{ $qt->name }}" required>
+                                <input type="text" class="form-control" name="question" placeholder="Question Here" value="{{ $qs->question }}" required>
                             </div>
                         </div>
                         <div class="form-group row justify-content-start">
-                            <label for="language" class="col-sm-1 text-right control-label col-form-label label-required">Language</label>
+                            <label for="question_type" class="col-sm-1 text-right control-label col-form-label label-required">Question Type</label>
                             <div class="col-sm-5">
-                                <select name="language" class="select2 form-control custom-select select2-hidden-accessible">
-                                    <option value="en" @if($qt->language == "en") {{ 'selected' }} @endif>English</option>
-                                    <option value="es" @if($qt->language == "es") {{ 'selected' }} @endif>Español</option>
+                                <select name="question_type" class="select2 form-control custom-select select2-hidden-accessible" required>
+                                    <option value="0" disabled selected hidden>Select a type</option>
+                                    @foreach( $qt as $item)
+                                        <option value="{{ $item->id }}" @if( $item->id == $qs->question_type_id) {{ 'selected' }} @endif>{{ $item->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -47,7 +49,7 @@
                             <div class="form-group row justify-content-center">
                                 <div class="col-sm-2">
                                     <button type="submit" class="btn btn-success"><i class="mdi mdi-content-save"></i> Save</button>
-                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/question-type'"><i class="mdi mdi-undo"></i> Cancel</button>
+                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/questions'"><i class="mdi mdi-undo"></i> Cancel</button>
                                 </div>
                             </div>
                         </div>

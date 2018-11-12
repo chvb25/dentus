@@ -50,7 +50,37 @@ Route::put('/update-q/{id}', 'Quiz\QuestionController@update');
 
 Route::delete('question/delete/{id}', 'Quiz\QuestionController@delete');
 
+/*
+|--------------------------------------------------------------------------
+| Answers Section
+|--------------------------------------------------------------------------
+*/
+Route::get('answers', 'Quiz\AnswerController@index');
 
-Route::get('user/{id}', function ($id) {
-    return 'User '.$id;
-});
+Route::get('answer/new', 'Quiz\AnswerController@toRegister');
+
+Route::get('answer-edit/{id}', 'Quiz\AnswerController@toUpdate');
+
+Route::post('/save-answer', 'Quiz\AnswerController@save');
+
+Route::put('/update-answer/{id}', 'Quiz\AnswerController@update');
+
+Route::delete('answer/delete/{id}', 'Quiz\AnswerController@delete');
+
+/*
+|--------------------------------------------------------------------------
+| Quiz Section
+|--------------------------------------------------------------------------
+*/
+Route::get('quizzes', 'Quiz\QuizController@index');
+
+Route::get('quiz/new', 'Quiz\QuizController@toRegister');
+
+Route::get('quiz-edit/{id}', 'Quiz\QuizController@toUpdate');
+
+Route::post('/save-quiz', 'Quiz\QuizController@save');
+
+Route::put('/update-quiz/{id}', 'Quiz\QuizController@update');
+
+Route::delete('quiz/delete/{id}', 'Quiz\QuizController@delete');
+

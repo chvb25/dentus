@@ -46,8 +46,8 @@
                         <div class="card-body">
                             <div class="form-group row justify-content-center">
                                 <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-success">Save</button>
-                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/question-type'">Cancel</button>
+                                    <button type="submit" class="btn btn-success"><i class="mdi mdi-content-save"></i> Save</button>
+                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/question-type'"><i class="mdi mdi-undo"></i> Cancel</button>
                                 </div>
                             </div>
                         </div>
