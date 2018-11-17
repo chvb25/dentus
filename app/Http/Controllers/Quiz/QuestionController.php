@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Quiz;
 use App\Http\Controllers\Controller;
 use App\Question;
 use App\Question_Type;
+use App\Answer;
+use function foo\func;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Mockery\Exception;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -21,7 +25,7 @@ class QuestionController extends Controller
 
     public  function toUpdate($id){
         $qs = Question::findOrFail($id);
-        return view('quiz.question-edit', ['qs' => $qs, 'qt' => Question_Type::orderBy('id', 'asc')->get()]);
+        return view('quiz.question-edit', ['qs' => $qs, 'qt' => Question_Type::orderBy('id', 'asc')->get(), 'answers' => Answer::orderBy('id', 'asc')->where('question_id', "=", $id )->get()]);
     }
 
     /**
@@ -32,14 +36,32 @@ class QuestionController extends Controller
     public function save(Request $request){
         $this->validateData($request, '/question/new');
 
-        $qt = new Question();
-        $qt->question = $request->question;
-        $qt->question_type_id = $request->question_type;
-        $qt->test_id = 1;
-        $qt->save();
+        $return = DB::transaction(function () use ($request){
+            try{
+                $qt = new Question();
+                $qt->question = $request->question;
+                $qt->question_type_id = $request->question_type;
+                $qt->test_id = 1;
+                $qt->save();
 
-        Session::push('success','Saved data.');
-        return redirect('/questions');
+                foreach ($request->dynamic as $item) {
+                    if (count($request->dynamic) == 1 && $item == "") break;
+                    $answer = new Answer();
+                    $answer->question_id = $qt->id;
+                    $answer->answer = $item;
+                    $answer->save();
+                }
+
+                Session::push('success','Saved data.');
+                return '/questions';
+            }catch (\Exception $e){
+                Session::push('error','Transaction error.');
+                return '/question/new';
+            }
+        });
+
+
+        return redirect($return);
     }
 
     /**
@@ -54,14 +76,32 @@ class QuestionController extends Controller
         }else{
             $this->validateData($request, '/question-edit/'. $id);
 
-            $qt = Question::findOrFail($id);
-            $qt->question = $request->question;
-            $qt->question_type_id = $request->question_type;
-            $qt->test_id = 1;
-            $qt->save();
+            $return =DB::transaction(function () use ($request, $id){
+                try {
+                    $qt = Question::findOrFail($id);
+                    $qt->question = $request->question;
+                    $qt->question_type_id = $request->question_type;
+                    $qt->test_id = 1;
+                    $qt->save();
+
+                    Answer::where('question_id', '=', $id)->delete();
+                    foreach ($request->dynamic as $item) {
+                        if (count($request->dynamic) == 1 && $item == "") break;
+                        $answer = new Answer();
+                        $answer->question_id = $id;
+                        $answer->answer = $item;
+
+                        $answer->save();
+                    }
+                    Session::push('success','Updated data.');
+                    return '/questions';
+                }catch (Exception $e){
+                    Session::push('error','Transaction error.');
+                    return '/question-edit/'. $id;
+                }
+            });
         }
-        Session::push('success','Updated data.');
-        return redirect('/questions');
+        return redirect($return);
     }
 
     /**
@@ -74,6 +114,7 @@ class QuestionController extends Controller
             Session::push('error','Element not found.');
         }else{
             Question::findOrFail($id)->delete();
+            Answer::where('question_id', "=", $id)->delete();
             Session::push('success','Deleted data.');
         }
         return redirect('/questions');
@@ -88,7 +129,7 @@ class QuestionController extends Controller
     private function validateData(Request $request, $redirect){
         $validator = Validator::make($request->all(),
             ['question'=>'required|min:5|max:100',
-                'question_type'=>'required|not_in:0']);
+             'question_type'=>'required|not_in:0']);
 
         if($validator->fails()){
             Session::push('error','message');
