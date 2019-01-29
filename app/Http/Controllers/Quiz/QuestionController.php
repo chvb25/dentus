@@ -15,17 +15,17 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    public function index(){
-        return view('quiz.question', ['data' => Question::orderBy('id', 'asc')->get()]);
+    public function index($test_id){
+        return view('quiz.question', ['data' => Question::orderBy('id', 'asc')->where('test_id','=', $test_id)->get(), 'test_id'=>$test_id]);
     }
 
-    public function toRegister(){
-        return view('quiz.question-new', ['qt' => Question_Type::orderBy('id', 'asc')->get()]);
+    public function toRegister($test_id){
+        return view('quiz.question-new', ['qt' => Question_Type::orderBy('id', 'asc')->get(), 'test_id'=>$test_id]);
     }
 
-    public  function toUpdate($id){
+    public  function toUpdate($id, $test_id){
         $qs = Question::findOrFail($id);
-        return view('quiz.question-edit', ['qs' => $qs, 'qt' => Question_Type::orderBy('id', 'asc')->get(), 'answers' => Answer::orderBy('id', 'asc')->where('question_id', "=", $id )->get()]);
+        return view('quiz.question-edit', ['qs' => $qs, 'qt' => Question_Type::orderBy('id', 'asc')->get(), 'answers' => Answer::orderBy('id', 'asc')->where('question_id', "=", $id )->get(), 'test_id'=>$test_id]);
     }
 
     /**
@@ -34,14 +34,14 @@ class QuestionController extends Controller
      * @return reditect to de list of the object
      */
     public function save(Request $request){
-        $this->validateData($request, '/question/new');
+        $this->validateData($request, '/question/new/'. $request->test_id);
 
         $return = DB::transaction(function () use ($request){
             try{
                 $qt = new Question();
                 $qt->question = $request->question;
                 $qt->question_type_id = $request->question_type;
-                $qt->test_id = 1;
+                $qt->test_id = $request->test_id;
                 $qt->save();
 
                 foreach ($request->dynamic as $item) {
@@ -53,10 +53,12 @@ class QuestionController extends Controller
                 }
 
                 Session::push('success','Saved data.');
-                return '/questions';
+                DB::commit();
+                return '/questions/'. $request->input('test_id');
             }catch (\Exception $e){
                 Session::push('error','Transaction error.');
-                return '/question/new';
+                DB::rollback();
+                return '/question/new/'. $request->test_id;
             }
         });
 
@@ -74,29 +76,32 @@ class QuestionController extends Controller
         if(Question::where('id','=', $id)->first() === null){
             Session::push('error','Element not found.');
         }else{
-            $this->validateData($request, '/question-edit/'. $id);
+            $this->validateData($request, '/question-edit/'. $id.'/'. $request->input('test_id'));
 
             $return =DB::transaction(function () use ($request, $id){
                 try {
                     $qt = Question::findOrFail($id);
                     $qt->question = $request->question;
                     $qt->question_type_id = $request->question_type;
-                    $qt->test_id = 1;
+                    $qt->test_id = $request->test_id;
                     $qt->save();
 
                     Answer::where('question_id', '=', $id)->delete();
-                    foreach ($request->dynamic as $item) {
-                        if (count($request->dynamic) == 1 && $item == "") break;
-                        $answer = new Answer();
-                        $answer->question_id = $id;
-                        $answer->answer = $item;
+                    if ($request->dynamic !== null)
+                        foreach ($request->dynamic as $item) {
+                            if (count($request->dynamic) == 1 && $item == "") break;
+                            $answer = new Answer();
+                            $answer->question_id = $id;
+                            $answer->answer = $item;
 
-                        $answer->save();
-                    }
+                            $answer->save();
+                        }
                     Session::push('success','Updated data.');
-                    return '/questions';
+                    DB::commit();
+                    return '/questions/'. $request->test_id;
                 }catch (Exception $e){
                     Session::push('error','Transaction error.');
+                    DB::rollback();
                     return '/question-edit/'. $id;
                 }
             });
@@ -109,7 +114,7 @@ class QuestionController extends Controller
      * @param $id
      * @return reditect to de list of the object
      */
-    public function delete($id){
+    public function delete($id, $test_id){
         if(Question::where('id','=', $id)->first() === null){
             Session::push('error','Element not found.');
         }else{
@@ -117,7 +122,7 @@ class QuestionController extends Controller
             Answer::where('question_id', "=", $id)->delete();
             Session::push('success','Deleted data.');
         }
-        return redirect('/questions');
+        return redirect('/questions/'. $test_id);
     }
 
     /**

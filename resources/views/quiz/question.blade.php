@@ -8,7 +8,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Question Type</h4>
+                <h4 class="page-title">Questions</h4>
 
             </div>
         </div>
@@ -24,10 +24,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5>List of Questions Types</h5>
+                        <a href="/test-edit/{{ $test_id }}" class="btn btn-flickr"><i class="fas fa-arrow-left"></i> Back</a><br><br>
+                        <h5>List of Questions</h5>
                         <div class="table-responsive">
-                            <!--<div class="add-button" name="question-type"><i class="fas fa-plus"></i></div>-->
-                            <table id="zero_config" class="table table-striped table-hover table-bordered dataTable" role="grid" aria-describedby="zero_config_info" name="question">
+                            <table id="zero_config" class="table table-striped table-hover table-bordered dataTable" role="grid" aria-describedby="zero_config_info" name="question_{{ $test_id }}">
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="zero_config" aria-sort="ascending">#</th>
@@ -42,18 +42,14 @@
                                     <tr>
                                         <th role="row"><?php echo $index; ?></th>
                                         <td>{{ $rows->question }}</td>
-                                        <td>{{ $rows->question_type_id }}</td>
+                                        <td>{{ $rows->question_type->name }}</td>
                                         <td class="actions">
-                                            <button type="submit" class="btn btn-primary" onclick="location.href='question-edit/{{ $rows->id }}'">
+                                            <button type="submit" class="btn btn-primary" onclick="location.pathname='question-edit/{{ $rows->id }}/{{ $test_id }}'">
                                                 <i class="fas fa-sync"></i> Update
                                             </button>
-                                            <form action="/question/delete/{{ $rows->id }}" method="POST" class="actions">
-                                                {{ csrf_field() }}
-                                                {{ method_field('DELETE') }}
-                                                <button type="submit" class="btn btn-danger">
-                                                    <i class="fa fa-trash"></i> Delete
-                                                </button>
-                                            </form>
+                                            <button type="submit" class="btn btn-danger delete" data-toggle="modal" data-target="#delete_item" data-itemid="/question/delete/{{ $rows->id }}/{{ $test_id }}">
+                                                <i class="fa fa-trash"></i> Delete
+                                            </button>
                                         </td>
                                     </tr>
                                     <?php $index++; ?>

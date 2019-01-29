@@ -1984,6 +1984,12 @@ form.actions{
   -ms-overflow-style: -ms-autohiding-scrollbar; }
   .table-responsive > .table-bordered {
     border: 0; }
+.twitter-typeahead,
+.tt-hint,
+.tt-input,
+.tt-menu{
+    width: 100%;
+}
 
 .form-control {
   display: block;
@@ -9575,6 +9581,9 @@ html body .waves-notransition {
 .btn.active .text {
   display: none; }
 
+.btn_remove{
+  cursor: pointer;
+}
 /*******************
 customizer
 *******************/
@@ -14653,7 +14662,9 @@ File: scss
 .profiletimeline .sl-date {
   font-size: 12px;
   color: #a1aab2; }
-
+.delete{
+  margin-left: 5px;
+}
 /*
 Template Name: Admin Template
 Author: Niravjoshi / Wrappixel

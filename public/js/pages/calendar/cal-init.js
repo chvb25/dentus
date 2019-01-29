@@ -100,7 +100,7 @@
                 header: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
+                    //right: 'month,agendaWeek,agendaDay'
                 },
                 events: defaultEvents,
                 editable: true,

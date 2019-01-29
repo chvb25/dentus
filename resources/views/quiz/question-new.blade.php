@@ -6,8 +6,7 @@
 <div class="page-breadcrumb">
     <div class="row">
         <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">Question Type</h4>
-
+            <h4 class="page-title">Question</h4>
         </div>
     </div>
 </div>
@@ -23,6 +22,7 @@
             <div class="card">
                 <form class="form-horizontal" action="{{ url('save-q') }}" method="post">
                     @csrf
+                    <input type="hidden" name="test_id" value="{{ $test_id }}">
                     <div class="card-body">
                         <h4 class="card-title">Information</h4>
                         <div class="form-group row justify-content-start">
@@ -61,7 +61,7 @@
                             <div class="form-group row justify-content-center">
                                 <div class="col-sm-2">
                                     <button type="submit" class="btn btn-success"><i class="mdi mdi-content-save"></i> Save</button>
-                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/questions'"><i class="mdi mdi-undo"></i> Cancel</button>
+                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/questions/{{ $test_id }}'"><i class="mdi mdi-undo"></i> Cancel</button>
                                 </div>
                             </div>
                         </div>
