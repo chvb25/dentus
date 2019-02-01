@@ -38,7 +38,7 @@ class AttentionController extends Controller
     /**
      * Register an item
      * @param Request $request
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function save(Request $request, $id){        
 
@@ -77,7 +77,8 @@ class AttentionController extends Controller
 
                 Session::push('success', 'Saved data.');
                 DB::commit();
-                return '/';
+                
+                return   ($request->cash == 0) ? '/' : (($request->cash == 1) ? '/cash/new/'. $attention->id. '/0' : '/receivable/new/'. $attention->id);
 
             }catch (\Exception $e){
                 DB::rollback();
@@ -89,4 +90,5 @@ class AttentionController extends Controller
 
         return redirect($return);
     }
+
 }

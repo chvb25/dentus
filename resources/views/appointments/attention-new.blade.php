@@ -17,92 +17,113 @@
     <!-- ============================================================== -->
     <!-- Container fluid  -->
     <!-- ============================================================== -->
+    <form id="form-save" class="form-horizontal" action="{{ url('save-attention') }}/{{ $appointment->id }}" method="post">
+    @csrf
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <form class="form-horizontal" action="{{ url('save-attention') }}/{{ $appointment->id }}" method="post">
-                        @csrf
-                        <div class="card-body">
-                            <h4 class="card-title">Information</h4>
-                            <div class="form-group row justify-content-start">
-                                <label for="name" class="col-sm-1 text-right control-label col-form-label">Patient</label>
-                                <div class="col-sm-5">    
-                                    <label class="text-left control-label col-form-label">{{ $appointment->completeName }}</label>
-                                </div>                                                                
-                            </div>
-                            <div class="form-group row justify-content-start">
-                                <label for="date" class="col-sm-1 text-right control-label col-form-label">Date</label>
-                                <div class="col-sm-5">
-                                    <label class="text-left control-label col-form-label">{{ date('d/m/Y', strtotime($appointment->date)) }}</label>
-                                </div>                             
-                            </div>
-                            <div class="form-group row justify-content-start">
-                                <label class="col-sm-1 text-right control-label col-form-label">Procedure</label>
-                                <div class="col-sm-5">
-                                    <label class="text-left control-label col-form-label">{{ $appointment->procedureName }}</label>
-                                </div>                                
-                            </div>
-                            
-                            @if ($appointment->procedure_id > 0)
-                            <div class="form-group row justify-content-start">
-                                <label class="col-sm-1 text-right control-label col-form-label label-required">Status</label>
-                                <div class="col-sm-5">
-                                    <select name="status" id="status" class="select2 form-control custom-select select2-hidden-accessible">
-                                        <option value="0" disabled selected hidden>Select a Status</option>                                        
-                                        <option value="2">In progess</option>
-                                        <option value="1">Complete</option>
-                                    </select>
-                                </div>                                
-                            </div>
-                            @endif                                                        
-                        </div>
-                        <div class="border-top">                              
-                            <div class="card-body">
-                                    <h4 class="card-title">Odontogramma</h4>
-                                    <div class="pannel-body">                              
-                                        <input type="hidden" name="tooth" id="tooth" value="0">
-                                        <input type="hidden" id="color" value="{{ $appointment->procedureColor }}">
-                                        <input type="hidden" id="procedureType" value="{{ $appointment->procedureType }}">                                          
-                                        <div class="row">
-                                            <div id="tr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                            </div>
-                                            <div id="tl" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                            </div>
-                                            <div id="tlr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-                                            </div>
-                                            <div id="tll" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div id="blr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-                                            </div>
-                                            <div id="bll" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                            </div>
-                                            <div id="br" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                            </div>
-                                            <div id="bl" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                            </div>
-                                        </div>                                    
-                                    </div>
-                                </div>
-                        </div>
-                        <div class="border-top">
-                            <div class="card-body">
-                                <div class="form-group row justify-content-center">
-                                    <div class="col-sm-2">
-                                        <button type="submit" class="btn btn-success"><i class="mdi mdi-content-save"></i> Save</button>
-                                        <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/'"><i class="mdi mdi-undo"></i> Cancel</button>
-                                    </div>
-                                </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Information</h4>
+                        <div class="form-group row justify-content-start">
+                            <label for="name" class="col-sm-2 text-right control-label col-form-label">Patient</label>
+                            <div class="col-sm-5">
+                                <label class="text-left control-label col-form-label">{{ $appointment->completeName }}</label>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <div class="form-group row justify-content-start">
+                            <label for="date" class="col-sm-2 text-right control-label col-form-label">Date</label>
+                            <div class="col-sm-5">
+                                <label class="text-left control-label col-form-label">{{ date('d/m/Y', strtotime($appointment->date)) }}</label>
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-start">
+                            <label class="col-sm-2 text-right control-label col-form-label">Procedure</label>
+                            <div class="col-sm-5">
+                                <label class="text-left control-label col-form-label">{{ $appointment->procedureName }}</label>
+                            </div>
+                        </div>
 
+                        @if ($appointment->procedure_id > 0)
+                        <div class="form-group row justify-content-start">
+                            <label class="col-sm-2 text-right control-label col-form-label label-required">Status</label>
+                            <div class="col-sm-5">
+                                <select name="status" id="status" class="select2 form-control custom-select select2-hidden-accessible">
+                                    <option value="0" disabled selected hidden>Select a Status</option>
+                                    <option value="2">In progess</option>
+                                    <option value="1">Complete</option>
+                                </select>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                                <h4 class="card-title">Odontogramma</h4>
+                                <div class="pannel-body">
+                                    <input type="hidden" name="tooth" id="tooth" value="0">
+                                    <input type="hidden" id="color" value="{{ $appointment->procedureColor }}">
+                                    <input type="hidden" id="procedureType" value="{{ $appointment->procedureType }}">
+                                    <div class="row">
+                                        <div id="tr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        </div>
+                                        <div id="tl" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        </div>
+                                        <div id="tlr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
+                                        </div>
+                                        <div id="tll" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div id="blr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
+                                        </div>
+                                        <div id="bll" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        </div>
+                                        <div id="br" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        </div>
+                                        <div id="bl" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <div class="form-group row justify-content-center">
+                                <div class="col-sm-3">
+                                    <input type="hidden" id="cash" name="cash" value="0">
+                                    <button type="submit" id="save" class="btn btn-success" onclick="$('#cash').val(0); return true;"><i class="mdi mdi-content-save"></i> Guardar</button>
+                                    <button type="submit" id="save-cash" class="btn btn-success" style="display: none;" data-toggle="modal" data-target="#attention-cash" onclick="return false"><i class="mdi mdi-content-save"></i> Guardar</button>
+                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/'"><i class="mdi mdi-undo"></i> Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="attention-cash" tabindex="-1" role="dialog" aria-labelledby="title" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title">Invoice</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Please select a method of payment.
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" onclick="$('#cash').val(1); return true;"><i class="far fa-money-bill-alt"></i> Cash</button>
+                    <button type="submit" class="btn btn-danger" onclick="$('#cash').val(2); return true;"><i class="fas fa-hand-holding-usd"></i> Receivable</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 @endsection
 
 @section('custom_scripts')
@@ -192,7 +213,7 @@
         $("#bll").append(replaceAll('index', '7', htmlLecheLeft));
         $("#blr").append(replaceAll('index', '8', htmlLecheRight));
     }
-    
+
     /**
     * Disabling teeth that have already been treated
     * @param {array} list List of teeth
@@ -200,7 +221,7 @@
     function disableTeeth(list){
         list.forEach(tooth => {
             if(isNaN(parseInt(tooth))){
-                $('#'+tooth).removeClass("click");                
+                $('#'+tooth).removeClass("click");
             }else{
                 $('#t'+tooth).removeClass("click");
                 $('#l'+tooth).removeClass("click");
@@ -212,44 +233,44 @@
                 $('#l'+tooth).addClass("disable-tooth");
                 $('#b'+tooth).addClass("disable-tooth");
                 $('#r'+tooth).addClass("disable-tooth");
-                $('#c'+tooth).addClass("disable-tooth");                
-            }                
+                $('#c'+tooth).addClass("disable-tooth");
+            }
         });
     }
 
-    function toohList(id){        
+    function toohList(id){
         if($('#tooth').val() == '0' || $('#tooth').val() == ''){
             $('#tooth').val(id);
-        }else{        
-            var list = $('#tooth').val().split(",");               
-            if (~(list.indexOf(id)))                                 
-                list = list.filter(e => e !== id); 
-            else 
+        }else{
+            var list = $('#tooth').val().split(",");
+            if (~(list.indexOf(id)))
+                list = list.filter(e => e !== id);
+            else
                 list.push(id);
-            $('#tooth').val(list.toString()); 
+            $('#tooth').val(list.toString());
         }
     }
     var arrayPuente = [];
-    $(document).ready(function() {        
+    $(document).ready(function() {
         createOdontogram();
         disableTeeth([]);
-        $(".click").click(function(event) {                                    
+        $(".click").click(function(event) {
             var procedureType = $('#procedureType').val();
             switch (procedureType) {
                 case "P": //piece
                     if ($(this).hasClass("click")) {
                         $(this).removeClass("click");
                         $(this).addClass("selectable");
-                        $(this).attr('style', 'background-color:' + $('#color').val());    
+                        $(this).attr('style', 'background-color:' + $('#color').val());
                     } else {
                         if ($(this).hasClass("selectable")) {
                             $(this).removeClass("selectable");
                             $(this).addClass("click");
                             $(this).removeAttr("style");
-                        }                        
-                    }                    
+                        }
+                    }
                     toohList($(this).attr('id'));
-                    break;   
+                    break;
                 case "F": //full tooth
                     var dientePosition = $(this).position();
                     var actual = $(this);
@@ -263,9 +284,9 @@
                                 $(el).addClass("click");
                                 $(el).removeClass("selectable");
                                 $(el).removeAttr('style');
-                            } 
-                        }                                                                     
-                    });                    
+                            }
+                        }
+                    });
                     toohList($(this).attr('id').substring(1));
                     break;
                 case "B": //bridge
@@ -312,7 +333,7 @@
                                 }
                             }
                         }
-                        console.log(leftPX)                       
+                        console.log(leftPX)
                         $(this).parent().append('<div style="z-index: 9999; height: 5px; width:' + width + 'px;" id="puente" class="click-red"></div>');
                         $(this).parent().children().last().css({
                             "position": "absolute",
@@ -323,11 +344,19 @@
 
                     break;
             }
-			
+			return false;
 		});
-        return false;
+        $('#status').change(function(){
+            if(this.value == 1){
+                $('#save-cash').removeAttr('style');
+                $('#save').attr('style', 'display:none;');
+            }else{
+                $('#save').removeAttr('style');
+                $('#save-cash').attr('style', 'display:none;');
+            }
+        });
     });
-    
+
     </script>
 @endsection
 

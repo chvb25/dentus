@@ -26,8 +26,6 @@
                 <div class="card-body">
                     <h5>List of Questions Types</h5>
                     <div class="table-responsive">
-
-                            <!--<div class="add-button" name="question-type"><i class="fas fa-plus"></i></div>-->
                             <table id="zero_config" class="table table-striped table-hover table-bordered dataTable" role="grid" aria-describedby="zero_config_info" name="question-type">
                                 <thead>
                                 <tr role="row">

@@ -6,7 +6,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Appointments</h4>
+                <h3 class="page-title">Citas</h3>
             </div>
         </div>
     </div>
@@ -19,11 +19,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-7">
-                <div class="card">                    
+                <div class="card">
                     <div class="card-body" style="display:inline !important;">
-                        <h5>Agenda <span id="newDate">today</span> <button type="button" class="btn btn-cyan" style="float:right;" onclick="addAppointment()"><i class="fas fa-plus"></i> Add</button></h5>                                                
+                        <h4>Agenda <span id="newDate">today</span> <button type="button" class="btn btn-cyan" style="float:right;" onclick="addAppointment()"><i class="fas fa-plus"></i> Add</button></h4>
                     </div>
-                    <ul class="list-style-none" id="appointment_list">                                                    
+                    <ul class="list-style-none" id="appointment_list">
                     </ul>
                 </div>
             </div>
@@ -39,7 +39,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span><i class="far fa-clock"></i>&nbsp;&nbsp;</span> <h5 class="modal-title" id="modalTitle">Re-Schedule - Procedure</h5>                    
+                    <span><i class="far fa-clock"></i>&nbsp;&nbsp;</span> <h5 class="modal-title" id="modalTitle">Reprogramar - Proceso</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -47,10 +47,10 @@
                 <form method="POST" class="reschedule-appointment" action="">
                     @csrf
                     {{ method_field('PUT') }}
-                    <div class="modal-body">                                        
+                    <div class="modal-body">
                         <div class="card-body">
                             <div class="form-group row justify-content-start">
-                                <label for="date" class="col-3 text-right control-label col-form-label label-required">Date</label>
+                                <label for="date" class="col-3 text-right control-label col-form-label label-required">Fecha</label>
                                 <div class="col-sm-5">
                                     <div class="input-group date">
                                         <input type="text" class="form-control" name="date" placeholder="dd/mm/yyyy" value="" id="datepicker" required>
@@ -58,10 +58,10 @@
                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                         </div>
                                     </div>
-                                </div>                             
-                            </div>           
+                                </div>
+                            </div>
                             <div class="form-group row justify-content-start">
-                                <label for="date" class="col-3 text-right control-label col-form-label label-required">Start Time</label>
+                                <label for="date" class="col-3 text-right control-label col-form-label label-required">Hora de inicio</label>
                                 <div class="col-sm-5">
                                     <div class="input-group clockpicker startTime">
                                         <input type="text" class="form-control" name="startTime" placeholder="HH:mm" value="" id="startTime" required>
@@ -69,10 +69,10 @@
                                             <span class="input-group-text"><i class="fas fa-clock"></i></span>
                                         </div>
                                     </div>
-                                </div>                             
+                                </div>
                             </div>
                             <div class="form-group row justify-content-start">
-                                <label for="date" class="col-3 text-right control-label col-form-label label-required">End Time</label>
+                                <label for="date" class="col-3 text-right control-label col-form-label label-required">Hora fin</label>
                                 <div class="col-sm-5">
                                     <div class="input-group clockpicker endTime">
                                         <input type="text" class="form-control" name="endTime" placeholder="HH:mm" value="" id="endTime" required>
@@ -80,15 +80,15 @@
                                             <span class="input-group-text"><i class="fas fa-clock"></i></span>
                                         </div>
                                     </div>
-                                </div>                             
-                            </div> 
-                        </div>                    
-                    
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    
-                    <div class="modal-footer">                    
-                        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Yes</button>                    
-                        <button type="button" class="btn btn-danger" data-dismiss="modal"><span aria-hidden="true"><b>X</b></span> Cancel</button>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Confirmar</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><span aria-hidden="true"><b>X</b></span> Cancelar</button>
                     </div>
                 </form>
             </div>
@@ -99,21 +99,21 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="title">Cancel Appoinment</h5>
+                    <h5 class="modal-title" id="title">Cancelar Cita</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to cancel this appointment?
+                    ¿Está seguro que desea cancelar la cita?
                 </div>
                 <div class="modal-footer">
                     <form method="POST" class="cancel_appointment" action="">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
-                        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Yes</button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Confirmar</button>
                     </form>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><span aria-hidden="true"><b>X</b></span> Cancel</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><span aria-hidden="true"><b>X</b></span> Cancelar</button>
                 </div>
             </div>
         </div>
@@ -127,37 +127,37 @@
 <link href="{{ asset('assets/extra-libs/calendar/calendar.css') }}" rel="stylesheet"/>
 <link href="{{ asset('assets/libs/fullcalendar/dist/fullcalendar.min.css') }}" rel="stylesheet"/>
 
-<script src="{{ asset('assets/libs/moment/min/moment.min.js') }} "></script>    
-<script src="{{ asset('assets/libs/fullcalendar/dist/fullcalendar.min.js') }} "></script>    
+<script src="{{ asset('assets/libs/moment/min/moment.min.js') }} "></script>
+<script src="{{ asset('assets/libs/fullcalendar/dist/fullcalendar.min.js') }} "></script>
 
 <link href="{{ asset('assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
-<script src="{{ asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }} "></script>    
+<script src="{{ asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }} "></script>
 <link href="{{ asset('assets/extra-libs/clockpicker/bootstrap-clockpicker.min.css') }}" rel="stylesheet"/>
-<script src="{{ asset('assets/extra-libs/clockpicker/bootstrap-clockpicker.min.js') }} "></script>    
+<script src="{{ asset('assets/extra-libs/clockpicker/bootstrap-clockpicker.min.js') }} "></script>
 
 <link rel="stylesheet" href="{{ asset('assets/libs/toastr/build/toastr.min.css') }}">
 <script src=" {{ asset('assets/libs/toastr/build/toastr.min.js') }} "></script>
 
 <script type="text/javascript">
 
-$(function () {        
+$(function () {
     var d = new Date();
     d.setDate(d.getDate() - 1);
     updateDate(d);
     $('#calendar').fullCalendar({
         defaultView: 'month',
-        handleWindowResize: true,           
-        selectable: true,                            
+        handleWindowResize: true,
+        selectable: true,
         dayClick: function(date) {
-            updateDate(date._d);                                                
+            updateDate(date._d);
         }
-    });        
+    });
 
     $('.fc-today-button').click(function(e){
         d = new Date();
         $('#calendar').fullCalendar('gotoDate', d);
         d.setDate(d.getDate() - 1);
-        updateDate(d);        
+        updateDate(d);
     });
 
     $('#datepicker').datepicker({
@@ -175,13 +175,13 @@ $(function () {
         afterDone: function(){
             var start = new Date (new Date().toDateString() + ' ' + $('#startTime').val());
             var end = new Date (new Date().toDateString() + ' ' + ($('#endTime').val() == '' ? '23:59': $('#endTime').val()));
-            if(end < start){          
+            if(end < start){
                 toastr.warning('The end time must be later than the start time!');
                 $('#startTime').val('');
                 $('#startTime').focus();
             }
-        }                   
-    });      
+        }
+    });
 
     $('.endTime').clockpicker({
         autoclose: true,
@@ -189,19 +189,19 @@ $(function () {
         afterDone: function(){
             var start = new Date (new Date().toDateString() + ' ' + $('#startTime').val());
             var end = new Date (new Date().toDateString() + ' ' + $('#endTime').val());
-            if(end < start){          
+            if(end < start){
                 toastr.warning('The end time must be later than the start time!');
                 $('#endTime').val('');
                 $('#endTime').focus();
             }
-        }       
+        }
     });
 });
 
-function updateActionForm(element, event){    
+function updateActionForm(element, event){
     var action = $(element).data('itemid');
-    var title = $(element).data('itemname');    
-    $('#modalTitle').text(title);    
+    var title = $(element).data('itemname');
+    $('#modalTitle').text(title);
     $('#datepicker').val('');
     $('#startTime').val('');
     $('#endTime').val('');
@@ -219,7 +219,7 @@ function updateDate(newDate){
     $('#newDate').text(newDate.toDateString());
     $.ajax({
         url: '{{ route('appointmentsByDate') }}'+'?query='+date,
-        type: 'get',                                        
+        type: 'get',
         dataType: 'json',
         success: function (response) {
             var len = 0;
@@ -236,7 +236,7 @@ function updateDate(newDate){
                     var procedure = response[i].procedureName;
                     var startTime =  response[i].start_time.substr(0, response[i].start_time.length - 3);
                     var endTime = response[i].end_time.substr(0, response[i].end_time.length - 3);
-                    var status = (response[i].status != 0);                    
+                    var status = (response[i].status != 0);
                     var path = (status) ? '#' : '/attention/new/'+response[i].id;
 
                     var row = '<li class="d-flex no-block card-body border-top apointments"><div>'+
@@ -248,29 +248,29 @@ function updateDate(newDate){
                                         '<h5 class="text-muted m-b-0 text-right">'+startTime+' - '+ endTime+'</h5>'+
                                         '<button type="submit" class="btn btn-outline-dark reschedule-appointment" data-toggle="modal" onclick="updateActionForm(this, event)"'+
                                         'data-target="#reschedule_item" data-itemid="/reschedule-appointments/'+id+'" data-itemName="'+
-                                        patient+' - '+ procedure+'" '+ (status ? 'disabled style="cursor: no-drop;' : '') +'><i class="far fa-clock"></i> Re-schedule</button>'+
+                                        patient+' - '+ procedure+'" '+ (status ? 'disabled style="cursor: no-drop;' : '') +'><i class="far fa-clock"></i> Reprogramar</button>'+
                                         '<button type="submit" class="btn btn-secondary delete cancel_appointment"  '+ (status ? 'disabled style="cursor: no-drop;' : '') +
-                                        ' onclick="updateActionCancelForm(this, event)" data-toggle="modal" data-target="#cancel_appointment" data-itemid="/cancel-appointments/'+id+'"><i class="far fa-calendar-times"></i> Cancel</button>'+                                         
-                                '</div></div></li>'; 
-                    $("#appointment_list").append(row);                                     
+                                        ' onclick="updateActionCancelForm(this, event)" data-toggle="modal" data-target="#cancel_appointment" data-itemid="/cancel-appointments/'+id+'"><i class="far fa-calendar-times"></i> Cancelar</button>'+
+                                '</div></div></li>';
+                    $("#appointment_list").append(row);
                 }
             }else{
                 var row = '<li class="d-flex no-block card-body border-top apointments"><div>'+
-                                    '<a href="#" class="m-b-0 font-medium p-0">No appointments</a>'+
+                                    '<a href="#" class="m-b-0 font-medium p-0">Sin citas</a>'+
                                     '<span class="text-muted"></span>'+
                                     '</div>'+
                                 '<div class="ml-auto">'+
                                     '<div class="tetx-right">'+
                                         '<h5 class="text-muted m-b-0"></h5>'+
                                         '<span class="text-muted font-16"></span>'+
-                                '</div></div></li>'; 
-                    $("#appointment_list").append(row);                                     
+                                '</div></div></li>';
+                    $("#appointment_list").append(row);
             }
         },
         fail: function(xhr, textStatus, errorThrown){
             alert('request failed');
         }
-    });            
+    });
 }
 
 function addAppointment(){

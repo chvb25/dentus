@@ -7977,7 +7977,7 @@ a.text-purple:hover, a.text-purple:focus {
     border: 1px solid #dee2e6 !important; } }
 
 /*******************
-Padding margin property 
+Padding margin property
 *******************/
 html[dir="ltr"] body .m-t-5 {
   margin-top: 5px; }
@@ -8294,8 +8294,8 @@ html[dir="ltr"] body .p-l-0 {
     #main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin6"] .create-btn, #main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] .create-btn {
       background: #4fc3f7; }
 
-/*============================================================== 
- For all pages 
+/*==============================================================
+ For all pages
  ============================================================== */
 #main-wrapper {
   width: 100%;
@@ -12416,7 +12416,7 @@ label {
 
 html[dir="rtl"] {
   /*******************
-Padding margin property 
+Padding margin property
 *******************/
   /** * Zero */
   /* Stickey inner-left-part */
@@ -14665,6 +14665,10 @@ File: scss
 .delete{
   margin-left: 5px;
 }
+tr.group{
+font-weight: bold;
+font-size: 1.1rem;
+}
 /*
 Template Name: Admin Template
 Author: Niravjoshi / Wrappixel
@@ -14835,17 +14839,17 @@ Author: Wrappixel
 
 File: scss
 */
-/*============================================================== 
- For Desktop & above all (1650px) 
+/*==============================================================
+ For Desktop & above all (1650px)
  ============================================================== */
-/*============================================================== 
- For Laptop & above all (1370px) 
+/*==============================================================
+ For Laptop & above all (1370px)
  ============================================================== */
-/*-- ============================================================== 
- Small Desktop & above all (1024px) 
+/*-- ==============================================================
+ Small Desktop & above all (1024px)
  ============================================================== */
-/*-- ============================================================== 
- Ipad & above all(768px) 
+/*-- ==============================================================
+ Ipad & above all(768px)
  ============================================================== */
 @media (min-width: 768px) {
   .bc-content {
@@ -14853,8 +14857,8 @@ File: scss
     -ms-flex-pack: end;
     justify-content: flex-end; } }
 
-/*-- ============================================================== 
- Phone and below ipad(767px) 
+/*-- ==============================================================
+ Phone and below ipad(767px)
  ============================================================== */
 @media (max-width: 991.98px) {
   .do-block {

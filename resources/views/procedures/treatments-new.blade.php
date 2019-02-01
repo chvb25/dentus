@@ -6,8 +6,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Treatments</h4>
-
+                <h3 class="page-title">Tratamientos</h3>
             </div>
         </div>
     </div>
@@ -24,16 +23,16 @@
                     <form class="form-horizontal" action="{{ url('save-treatments') }}" method="post">
                         @csrf
                         <div class="card-body">
-                            <h4 class="card-title">Information</h4>
+                            <h4 class="card-title">Información</h4>
                             <div class="form-group row justify-content-start">
-                                <label for="name" class="col-sm-1 text-right control-label col-form-label label-required">Patient</label>
-                                <div class="col-sm-5">    
-                                    <input type="hidden" name="patient_id" id="patient_id" value="0">                                    
-                                    <input type="text" data-provide="typeahead" class="form-control typeahead" name="name" placeholder="Search patients..." autocomplete="off" value="{{ old('name') }}" required>
-                                </div>                                                                
+                                <label for="name" class="col-sm-2 text-right control-label col-form-label label-required">Paciente</label>
+                                <div class="col-sm-5">
+                                    <input type="hidden" name="patient_id" id="patient_id" value="0">
+                                    <input type="text" data-provide="typeahead" class="form-control typeahead" name="name" placeholder="Buscar Pacientes..." autocomplete="off" value="{{ old('name') }}" required>
+                                </div>
                             </div>
                             <div class="form-group row justify-content-start">
-                                <label for="date" class="col-sm-1 text-right control-label col-form-label label-required">Date</label>
+                                <label for="date" class="col-sm-2 text-right control-label col-form-label label-required">Fecha</label>
                                 <div class="col-sm-5">
                                     <div class="input-group date">
                                         <input type="text" class="form-control" name="date" placeholder="dd/mm/yyyy" value="{{ old('date') }}" id="datepicker">
@@ -41,28 +40,28 @@
                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                         </div>
                                     </div>
-                                </div>                             
+                                </div>
                             </div>
                             <div class="form-group row justify-content-start">
-                                <label for="procedures" class="col-sm-1 text-right control-label col-form-label label-required">Procedures</label>
+                                <label for="procedures" class="col-sm-2 text-right control-label col-form-label label-required">Procedimiento</label>
                                 <div class="col-sm-5">
                                     <select name="procedures" id="procedures" class="select2 form-control custom-select select2-hidden-accessible">
-                                        <option value="0" disabled selected hidden>Select a Procedure - cost</option>
+                                        <option value="0" disabled selected hidden>Seleccione un Procedimiento - Precio</option>
                                         @foreach( $procedures as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }} - {{ $item->cost }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <button type="button" name="add" id="add" class="btn btn-default"><i class="fa fa-plus"></i> Add</button>
+                                <button type="button" name="add" id="add" class="btn btn-default"><i class="fa fa-plus"></i> Agregar</button>
                             </div>
                             <div class="form-group row justify-content-start">
                                 <table class="table"  id="dynamic_field">
-                                    <thead><tr><th scope="col">Name</th><th scope="col">Cost</th><th scope="col">Actions</th></tr></thead>
+                                    <thead><tr><th scope="col">Nombre</th><th scope="col">Precio</th><th scope="col">Acción</th></tr></thead>
                                     <tbody id="dynamic_field"></tbody>
                                 </table>
                             </div>
                             <div class="form-group row justify-content-start">
-                                <label for="subtotal" class="col-sm-1 text-right control-label col-form-label">SubTotal</label>
+                                <label for="subtotal" class="col-sm-2 text-right control-label col-form-label">Sub Total</label>
                                 <div class="col-sm-5">
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="subtotal" id="subtotal" value="{{ (is_nan(old('subtotal'))) ? 0.00 : old('subtotal') }}" readonly>
@@ -73,7 +72,7 @@
                                 </div>
                             </div>
                             <div class="form-group row justify-content-start">
-                                <label for="discount" class="col-sm-1 text-right control-label col-form-label">Discount</label>
+                                <label for="discount" class="col-sm-2 text-right control-label col-form-label">Descuento</label>
                                 <div class="col-sm-5">
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="discount" name="discount" value="{{ (is_nan(old('discount'))) ? 0.00 : old('discount')  }}">
@@ -84,7 +83,7 @@
                                 </div>
                             </div>
                             <div class="form-group row justify-content-start">
-                                <label for="total" class="col-sm-1 text-right control-label col-form-label">Total</label>
+                                <label for="total" class="col-sm-2 text-right control-label col-form-label">Total</label>
                                 <div class="col-sm-5">
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="total" name="total" value="{{ (is_nan(old('total'))) ? 0.00 : old('total') }}" readonly>
@@ -98,9 +97,9 @@
                         <div class="border-top">
                             <div class="card-body">
                                 <div class="form-group row justify-content-center">
-                                    <div class="col-sm-2">
-                                        <button type="submit" class="btn btn-success"><i class="mdi mdi-content-save"></i> Save</button>
-                                        <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/treatments'"><i class="mdi mdi-undo"></i> Cancel</button>
+                                    <div class="col-sm-3">
+                                        <button type="submit" class="btn btn-success"><i class="mdi mdi-content-save"></i> Guardar</button>
+                                        <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/treatments'"><i class="mdi mdi-undo"></i> Cancelar</button>
                                     </div>
                                 </div>
                             </div>
@@ -116,9 +115,9 @@
 
 @section('custom_scripts')
     <link href="{{ asset('assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
-    <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }} "></script>    
+    <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }} "></script>
     <script type="text/javascript">
-        
+
         jQuery('#datepicker').datepicker({
             autoclose: true,
             todayHighlight: true,
@@ -179,7 +178,7 @@
             }
         }
 
-        
+
         var bloodhound = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.whitespace,
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -193,9 +192,9 @@
             highlight: true,
             minLength: 2
         },{ name: 'patients',
-            source: bloodhound,            
-            display: function(data) {                
-                return data.completeName //Input value to be set when you select a suggestion. 
+            source: bloodhound,
+            display: function(data) {
+                return data.completeName //Input value to be set when you select a suggestion.
             },
             templates: {
                 empty: [
@@ -207,13 +206,13 @@
                 suggestion: function(data) {
                 return '<div style="font-weight:normal; margin-top:-10px ! important;" class="list-group-item patient-list-item">' + data.completeName + '</div></div>'
                 }
-            }            
+            }
         });
 
-        $('.typeahead').on('typeahead:selected', function(evt, item) {            
+        $('.typeahead').on('typeahead:selected', function(evt, item) {
             $('#patient_id').val(item.id);
             $('input.typeahead').val(item.completeName);
         });
-    
+
     </script>
 @endsection

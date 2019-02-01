@@ -8,8 +8,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Patients</h4>
-
+                <h3 class="page-title">Pacientes</h3>
             </div>
         </div>
     </div>
@@ -24,14 +23,14 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5>List of Patients</h5>
+                        <h4>Listado de pacientes</h4>
                         <div class="table-responsive">
                             <table id="zero_config" class="table table-striped table-hover table-bordered dataTable" role="grid" aria-describedby="zero_config_info" name="patients">
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="zero_config" aria-sort="ascending">#</th>
-                                    <th class="sorting" tabindex="0" aria-controls="zero_config">Name</th>
-                                    <th class="sorting" tabindex="0" aria-controls="zero_config">Last Name</th>
+                                    <th class="sorting" tabindex="0" aria-controls="zero_config">Nombre</th>
+                                    <th class="sorting" tabindex="0" aria-controls="zero_config">Apellido</th>
                                     <th class="sorting" tabindex="0" aria-controls="zero_config">DNI</th>
                                     <th>-</th>
                                 </tr>
@@ -46,10 +45,10 @@
                                         <td>{{ $rows->dni }}</td>
                                         <td class="actions">
                                             <button type="submit" class="btn btn-primary" onclick="location.href='patients-edit/{{ $rows->id }}'">
-                                                <i class="fas fa-sync"></i> Update
+                                                <i class="fas fa-sync"></i> Modificar
                                             </button>
                                             <button type="submit" class="btn btn-danger delete" data-toggle="modal" data-target="#delete_item" data-itemid="/patients/delete/{{ $rows->id }}">
-                                                <i class="fa fa-trash"></i> Delete
+                                                <i class="fa fa-trash"></i> Eliminar
                                             </button>
 
                                         </td>

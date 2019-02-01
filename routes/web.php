@@ -196,3 +196,37 @@ Route::delete('appointments/delete/{id}', 'Appointments\AppointmentsController@d
 Route::get('attention/new/{id}', 'Appointments\AttentionController@toRegister');
 
 Route::post('/save-attention/{id}', 'Appointments\AttentionController@save');
+
+/*
+|--------------------------------------------------------------------------
+| Cash
+|--------------------------------------------------------------------------
+*/
+Route::get('cash', 'Cashier\CashController@index');
+
+Route::get('cash/new/{attention_id}/{receivable_id}', 'Cashier\CashController@toRegister');
+
+Route::post('/save-cash/{id}/{receivable_id}', 'Cashier\CashController@save');
+
+/*
+|--------------------------------------------------------------------------
+| Receivable
+|--------------------------------------------------------------------------
+*/
+Route::get('receivable/new/{attention_id}', 'Cashier\ReceivableController@toRegister');
+
+Route::post('/save-receivable/{attention_id}', 'Cashier\ReceivableController@save');
+/*
+|--------------------------------------------------------------------------
+| Payment Plan
+|--------------------------------------------------------------------------
+*/
+Route::get('payment_plan', 'Cashier\Payment_PlanController@index');
+/*
+|--------------------------------------------------------------------------
+| Setting
+|--------------------------------------------------------------------------
+*/
+Route::get('setting', 'SettingController@index');
+
+Route::put('save-setting', 'SettingController@save');

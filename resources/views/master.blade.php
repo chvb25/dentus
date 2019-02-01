@@ -81,9 +81,8 @@
                 <!-- ============================================================== -->
                 <!-- toggle and nav items -->
                 <!-- ============================================================== -->
-                <ul class="navbar-nav float-left mr-auto">
-                    <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
-                    <li class="nav-item float-left"><span class="client-name">Clinica asdf</span></li>
+                <ul class="navbar-nav mr-auto" style="margin: 0 auto;">
+                    <li class="nav-item"><span class="client-name">Clinica asdf</span></li>
                 </ul>
                 <!-- ============================================================== -->
                 <!-- Right side toggle and nav items -->
@@ -95,7 +94,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ URL::to('assets/images/users/1.jpg') }}" alt="user" class="rounded-circle" width="31"></a>
                         <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Setting</a>
+                            <a class="dropdown-item" href="{{ url('setting') }}"><i class="ti-settings m-r-5 m-l-5"></i> Setting</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
                         </div>
@@ -119,56 +118,65 @@
             <!-- Sidebar navigation-->
             <nav class="sidebar-nav">
                 <ul id="sidebarnav" class="p-t-30">
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-address-card"></i><span class="hide-menu">Patients</span></a>
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-address-card"></i><span class="hide-menu">Pacientes</span></a>
                         <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a class="sidebar-link" href="{{ url('patients') }}"><i class="mdi mdi-clipboard-account"></i><span class="hide-menu"> List </span></a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="{{ url('patients/new') }}"><i class="mdi mdi-account-plus"></i><span class="hide-menu"> Create New </span></a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="{{ url('patients') }}"><i class="mdi mdi-clipboard-account"></i><span class="hide-menu"> Listado </span></a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="{{ url('patients/new') }}"><i class="mdi mdi-account-plus"></i><span class="hide-menu"> Registrar Nuevo </span></a></li>
                         </ul>
                     </li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="far fa-calendar-alt"></i><span class="hide-menu">Appointments</span></a>
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="far fa-calendar-alt"></i><span class="hide-menu">Citas</span></a>
                         <ul aria-expanded="false" class="collapse  first-level">
-                                <li class="sidebar-item"><a href="{{ url('appointments') }}" class="sidebar-link"><i class="fas fa-calendar-check"></i><span class="hide-menu"> List </span></a></li>
-                                <li class="sidebar-item"><a href="{{ url('appointments/new') }}" class="sidebar-link"><i class="fas fa-calendar-plus"></i><span class="hide-menu"> Create New </span></a></li>
+                                <li class="sidebar-item"><a href="{{ url('appointments') }}" class="sidebar-link"><i class="fas fa-calendar-check"></i><span class="hide-menu"> Listado </span></a></li>
+                                <li class="sidebar-item"><a href="{{ url('appointments/new') }}" class="sidebar-link"><i class="fas fa-calendar-plus"></i><span class="hide-menu"> Registrar Nuevo </span></a></li>
                         </ul>
                     </li>
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Procedures</span></a>
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Procedimientos</span></a>
                         <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-recycle"></i><span class="hide-menu"> Procedures </span></a>
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-vials"></i><span class="hide-menu"> Procesos </span></a>
                                 <ul aria-expanded="false" class="collapse  second-level">
-                                    <li class="sidebar-item"><a href="{{ url('procedures') }}" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> List </span></a></li>
-                                    <li class="sidebar-item"><a href="{{ url('procedures/new') }}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Create New </span></a></li>
+                                    <li class="sidebar-item"><a href="{{ url('procedures') }}" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> Listado </span></a></li>
+                                    <li class="sidebar-item"><a href="{{ url('procedures/new') }}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Registrar Nuevo </span></a></li>
                                 </ul>
                             </li>
-                            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-book"></i><span class="hide-menu"> Quotes </span></a>
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-book"></i><span class="hide-menu"> Cotizaciones </span></a>
                                 <ul aria-expanded="false" class="collapse  second-level">
-                                    <li class="sidebar-item"><a href="{{ url('quotes') }}" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> List </span></a></li>
-                                    <li class="sidebar-item"><a href="{{ url('quotes/new') }}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Create New </span></a></li>
+                                    <li class="sidebar-item"><a href="{{ url('quotes') }}" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> Listado </span></a></li>
+                                    <li class="sidebar-item"><a href="{{ url('quotes/new') }}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Registrar Nuevo </span></a></li>
                                 </ul>
                             </li>
-                            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-notes-medical"></i><span class="hide-menu"> Treatments </span></a>
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-notes-medical"></i><span class="hide-menu"> Tratamientos </span></a>
                                 <ul aria-expanded="false" class="collapse  second-level">
-                                    <li class="sidebar-item"><a href="{{ url('treatments') }}" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> List </span></a></li>
-                                    <li class="sidebar-item"><a href="{{ url('treatments/new') }}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Create New </span></a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Quizzes</span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-clipboard"></i><span class="hide-menu"> Quizzes </span></a>
-                                <ul aria-expanded="false" class="collapse  second-level">
-                                    <li class="sidebar-item"><a href="{{ url('test') }}" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> List </span></a></li>
-                                    <li class="sidebar-item"><a href="{{ url('test/new') }}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Create New </span></a></li>
-                                </ul>
-                            </li>
-                            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-clipboard-check "></i><span class="hide-menu"> Result </span></a>
-                                <ul aria-expanded="false" class="collapse  second-level">
-                                    <li class="sidebar-item"><a href="{{ url('questions') }}" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> List </span></a></li>
+                                    <li class="sidebar-item"><a href="{{ url('treatments') }}" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> Listado </span></a></li>
+                                    <li class="sidebar-item"><a href="{{ url('treatments/new') }}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Registrar Nuevo </span></a></li>
                                 </ul>
                             </li>
                         </ul>
                     </li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="grid.html" aria-expanded="false"><i class="mdi mdi-chart-bar"></i><span class="hide-menu">Cashier</span></a></li>
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Cuestionarios</span></a>
+                        <ul aria-expanded="false" class="collapse  first-level">
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-clipboard"></i><span class="hide-menu"> Cuetionario </span></a>
+                                <ul aria-expanded="false" class="collapse  second-level">
+                                    <li class="sidebar-item"><a href="{{ url('test') }}" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> Listado </span></a></li>
+                                    <li class="sidebar-item"><a href="{{ url('test/new') }}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Registrar Nuevo </span></a></li>
+                                </ul>
+                            </li>
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-clipboard-check "></i><span class="hide-menu"> Resultados </span></a>
+                                <ul aria-expanded="false" class="collapse  second-level">
+                                    <li class="sidebar-item"><a href="{{ url('questions') }}" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> Listado </span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span class="hide-menu">Ingresos</span></a>
+                        <ul aria-expanded="false" class="collapse  first-level">
+                            <li class="sidebar-item"><a href="{{ url('cash') }}" class="sidebar-link"><i class="far fa-money-bill-alt"></i><span class="hide-menu"> Caja </span></a></li>
+                            <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-handshake"></i><span class="hide-menu"> Cuentas por cobrar </span></a>
+                                <ul aria-expanded="false" class="collapse  second-level">
+                                    <li class="sidebar-item"><a href="{{ url('payment_plan') }}" class="sidebar-link"><i class="fas fa-hand-holding-usd"></i><span class="hide-menu"> Cuotas </span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->
@@ -187,7 +195,7 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer text-center">
-            All Rights Reserved by VillageSoftware. Designed and Developed by <a target="_blank" href="http://villafani.com">VillachSoftware</a>.
+            Todos los derechos reservados por VillageSoftware. Diseñado y desarrollado por <a target="_blank" href="http://villafani.com">VillachSoftware</a>.
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->

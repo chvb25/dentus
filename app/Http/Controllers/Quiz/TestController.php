@@ -30,7 +30,7 @@ class TestController extends Controller
     /**
      * Register an item
      * @param Request $request
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function save(Request $request){
         $this->validateData($request, '/test/new');
@@ -51,7 +51,7 @@ class TestController extends Controller
      * Update an item
      * @param Request $request
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function update(Request $request, $id){
         if(Test::where('id','=', $id)->first() === null){
@@ -71,7 +71,7 @@ class TestController extends Controller
     /**
      * Delete an item
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function delete($id){
         if(Test::where('id','=', $id)->first() === null){

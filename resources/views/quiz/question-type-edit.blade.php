@@ -27,13 +27,13 @@
                     <div class="card-body">
                         <h4 class="card-title">Information</h4>
                         <div class="form-group row justify-content-start">
-                            <label for="name" class="col-sm-1 text-right control-label col-form-label label-required">Name</label>
+                            <label for="name" class="col-sm-2 text-right control-label col-form-label label-required">Nombre</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" name="name" placeholder="Name Here" value="{{ $qt->name }}" required>
+                                <input type="text" class="form-control" name="name" value="{{ $qt->name }}" required>
                             </div>
                         </div>
                         <div class="form-group row justify-content-start">
-                            <label for="language" class="col-sm-1 text-right control-label col-form-label label-required">Language</label>
+                            <label for="language" class="col-sm-2 text-right control-label col-form-label label-required">Idioma</label>
                             <div class="col-sm-5">
                                 <select name="language" class="select2 form-control custom-select select2-hidden-accessible">
                                     <option value="en" @if($qt->language == "en") {{ 'selected' }} @endif>English</option>
@@ -45,9 +45,9 @@
                     <div class="border-top">
                         <div class="card-body">
                             <div class="form-group row justify-content-center">
-                                <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-success"><i class="mdi mdi-content-save"></i> Save</button>
-                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/question-type'"><i class="mdi mdi-undo"></i> Cancel</button>
+                                <div class="col-sm-3">
+                                    <button type="submit" class="btn btn-success"><i class="mdi mdi-content-save"></i> Guardar</button>
+                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/question-type'"><i class="mdi mdi-undo"></i> Cancelar</button>
                                 </div>
                             </div>
                         </div>

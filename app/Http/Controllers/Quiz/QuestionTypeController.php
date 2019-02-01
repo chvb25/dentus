@@ -27,7 +27,7 @@ class QuestionTypeController extends Controller
     /**
      * Register an item
      * @param Request $request
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function save(Request $request){
         $this->validateData($request, '/question-type/new');
@@ -45,7 +45,7 @@ class QuestionTypeController extends Controller
      * Update an item
      * @param Request $request
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function update(Request $request, $id){
         if(Question_Type::where('id','=', $id)->first() === null){
@@ -65,7 +65,7 @@ class QuestionTypeController extends Controller
     /**
      * Delete an item
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function delete($id){
         if(Question_Type::where('id','=', $id)->first() === null){

@@ -7,8 +7,7 @@
 <div class="page-breadcrumb">
     <div class="row">
         <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">Question Type</h4>
-
+            <h3 class="page-title">Preguntas</h3>
         </div>
     </div>
 </div>
@@ -27,18 +26,18 @@
                     {{ method_field('PUT') }}
                     <input type="hidden" name="test_id" value="{{ $test_id }}">
                     <div class="card-body">
-                        <h4 class="card-title">Information</h4>
+                        <h4 class="card-title">Información</h4>
                         <div class="form-group row justify-content-start">
-                            <label for="question" class="col-sm-1 text-right control-label col-form-label label-required">Question</label>
+                            <label for="question" class="col-sm-2 text-right control-label col-form-label label-required">Pregunta</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" name="question" placeholder="Question Here" value="{{ $qs->question }}" required>
+                                <input type="text" class="form-control" name="question" value="{{ $qs->question }}" required>
                             </div>
                         </div>
                         <div class="form-group row justify-content-start">
-                            <label for="question_type" class="col-sm-1 text-right control-label col-form-label label-required">Question Type</label>
+                            <label for="question_type" class="col-sm-2 text-right control-label col-form-label label-required">Tipo de Pregunta</label>
                             <div class="col-sm-5">
                                 <select name="question_type" id="question_type" class="select2 form-control custom-select select2-hidden-accessible" required>
-                                    <option value="0" disabled selected hidden>Select a type</option>
+                                    <option value="0" disabled selected hidden>Seleccione un tipo</option>
                                     @foreach( $qt as $item)
                                         <option value="{{ $item->id }}" @if( $item->id == $qs->question_type_id) {{ 'selected' }} @endif>{{ $item->name }}</option>
                                     @endforeach
@@ -48,7 +47,7 @@
                     </div>
                     <div class="border-top" id="second_section" hidden>
                         <div class="card-body">
-                            <h4 class="card-title">Answers</h4>
+                            <h4 class="card-title">Respuestas</h4>
                             <div class="form-group row justify-content-start">
                                 <table class="table" id="dynamic_field">
                                     <?php $i = 1; ?>
@@ -56,7 +55,7 @@
                                         @if($loop->first)
                                             <tr>
                                                 <td><input type="text" name="dynamic[]" class="form-control name_list dynamic" required value="{{ $item->answer }}" /></td>
-                                                <td><button type="button" name="add" id="add" class="btn btn-default"><i class="fa fa-plus"></i> Add More</button></td>
+                                                <td><button type="button" name="add" id="add" class="btn btn-default"><i class="fa fa-plus"></i> Agregar</button></td>
                                             </tr>
                                         @else
                                             <tr id="row<?php echo $i; ?>" class="dynamic-added">
@@ -73,9 +72,9 @@
                     <div class="border-top">
                         <div class="card-body">
                             <div class="form-group row justify-content-center">
-                                <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-success"><i class="mdi mdi-content-save"></i> Save</button>
-                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/questions/{{ $test_id }}'"><i class="mdi mdi-undo"></i> Cancel</button>
+                                <div class="col-sm-3">
+                                    <button type="submit" class="btn btn-success"><i class="mdi mdi-content-save"></i> Guardar</button>
+                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/questions/{{ $test_id }}'"><i class="mdi mdi-undo"></i> Cancelar</button>
                                 </div>
                             </div>
                         </div>

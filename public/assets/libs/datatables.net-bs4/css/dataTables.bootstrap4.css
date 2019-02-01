@@ -203,7 +203,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 div.add-button{
   width: 50px;
   height: 35px;
-  background-color: #00aff0;
+  background-color: #63b0a8;
   float: right;
   font-size: x-large;
   text-align: center;
@@ -212,5 +212,5 @@ div.add-button{
   cursor: pointer;
 }
 div.add-button:hover{
-  background-color: #366cf0;
+  background-color: #018c8f;
 }

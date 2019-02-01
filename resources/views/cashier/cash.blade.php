@@ -8,7 +8,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h3 class="page-title">Tratamientos</h3>
+                <h3 class="page-title">Ingresos</h3>
             </div>
         </div>
     </div>
@@ -23,17 +23,16 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4>Listado de Tratamientos</h4>
+                        <h4>Listado de Ingreso por Caja</h4>
                         <div class="table-responsive">
-                            <table id="zero_config" class="table table-striped table-hover table-bordered dataTable" role="grid" aria-describedby="zero_config_info" name="treatments">
+                            <table id="zero_config" class="table table-striped table-hover table-bordered dataTable" role="grid" aria-describedby="zero_config_info" name="procedures">
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="zero_config" aria-sort="ascending">#</th>
                                     <th class="sorting" tabindex="0" aria-controls="zero_config">Paciente</th>
                                     <th class="sorting" tabindex="0" aria-controls="zero_config">Fecha</th>
-                                    <th class="sorting" tabindex="0" aria-controls="zero_config">Nro. Cotización</th>
-                                    <th class="sorting" tabindex="0" aria-controls="zero_config">Precio</th>
-                                    <th class="sorting" tabindex="0" aria-controls="zero_config">Estado</th>
+                                    <th class="sorting" tabindex="0" aria-controls="zero_config">CxC - Nro. Cuota</th>
+                                    <th class="sorting text-right" tabindex="0" aria-controls="zero_config">Monto</th>
                                     <th>-</th>
                                 </tr>
                                 </thead>
@@ -42,17 +41,17 @@
                                 @foreach($data as $rows)
                                     <tr>
                                         <th role="row"><?php echo $index; ?></th>
-                                        <td>{{ $rows->patient->completeName }}</td>
-                                        <td>{{ date('d/m/Y', strtotime($rows->date)) }}</td>
-                                        <td>{{ $rows->quote_id }}</td>
-                                        <td>{{ $rows->final_price }}</td>
-                                        <td class="text-{{ ($rows->status == 0) ? 'warning' : (($rows->status == 1) ? 'success' : 'info') }}">{{ ($rows->status == 0) ? 'No iniciado' : (($rows->status == 1) ? 'Completo' : 'En proceso') }}</td>
+                                        <td>{{ $rows->attention->completeName }}</td>
+                                        <td>{{ date('d/m/Y', strtotime($rows->created_at)) }}</td>
+                                        <td>{{ ($rows->receivable_id == 0) ? '-' : $rows->receivable_id }}</td>
+                                        <td class="text-right">{{ $rows->amount }} $</td>
                                         <td class="actions">
-                                            <button type="submit" class="btn btn-cyan" data-itemid="{{ $rows->id }}" onclick="searchDetail(this)"><i class="fa fa-eye"></i> Detalle</button>
-                                            <button type="submit" class="btn btn-primary delete" onclick="location.href='treatments-edit/{{ $rows->id }}'" {{ ($rows->status == 1) ? 'disabled' :'' }}>
-                                                <i class="fas fa-sync"></i> Modificar</button>
-                                            <button type="submit" class="btn btn-danger delete" data-toggle="modal" data-target="#delete_item" data-itemid="/treatments/delete/{{ $rows->id }}" {{ ($rows->status == 1) ? 'disabled' :'' }}>
-                                                <i class="fa fa-trash"></i> Eliminar</button>
+                                            <button type="submit" class="btn btn-primary" onclick="location.href='cash-edit/{{ $rows->id }}'">
+                                                <i class="fas fa-sync"></i> Modificar
+                                            </button>
+                                            <button type="submit" class="btn btn-danger delete" data-toggle="modal" data-target="#delete_item" data-itemid="/cash/delete/{{ $rows->id }}">
+                                                <i class="fa fa-trash"></i> Eliminar
+                                            </button>
                                         </td>
                                     </tr>
                                     <?php $index++; ?>
@@ -69,20 +68,4 @@
     <!-- ============================================================== -->
     <!-- End Container fluid  -->
     <!-- ============================================================== -->
-    <script>
-        function searchDetail(element){
-            var id = $(element).data('itemid');
-            $.ajax({
-                url: '{{ route('viewDetails') }}'+'?query='+id,
-                type: 'get',
-                dataType: 'json',
-                success: function (data) {
-                    showDetail(element, data);
-                },
-                fail: function(xhr, textStatus, errorThrown){
-                    alert('request failed');
-                }
-            });
-        }
-    </script>
 @endsection

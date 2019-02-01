@@ -28,7 +28,7 @@ class ProceduresController extends Controller
     /**
      * Register an item
      * @param Request $request
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function save(Request $request){
         $this->validateData($request, '/procedures/new');
@@ -48,7 +48,7 @@ class ProceduresController extends Controller
      * Update an item
      * @param Request $request
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function update(Request $request, $id){
         if(Procedures::where('id','=', $id)->first() === null){
@@ -71,7 +71,7 @@ class ProceduresController extends Controller
     /**
      * Delete an item
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function delete($id){
         if(Procedures::where('id','=', $id)->first() === null){

@@ -31,7 +31,7 @@ class AppointmentsController extends Controller
     /**
      * Register an item
      * @param Request $request
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function save(Request $request){
         $this->validateData($request, '/appointments/new');
@@ -68,7 +68,7 @@ class AppointmentsController extends Controller
     /**
      * Register an item
      * @param Request $request
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function saveWithTreatment(Request $request){        
         error_log('save : '. $request);
@@ -109,7 +109,7 @@ class AppointmentsController extends Controller
      * Update an item
      * @param Request $request
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function update(Request $request, $id){
         $this->validateData($request, '/appointments-edit/'. $id);
@@ -145,7 +145,7 @@ class AppointmentsController extends Controller
      * Update an item
      * @param Request $request
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function updateWithTreatment(Request $request, $id){
         
@@ -181,7 +181,7 @@ class AppointmentsController extends Controller
      * Update an item
      * @param Request $request
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function reschedule(Request $request, $id){
         
@@ -213,7 +213,7 @@ class AppointmentsController extends Controller
      * Update an item
      * @param Request $request
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function cancel($id){
         
@@ -240,7 +240,7 @@ class AppointmentsController extends Controller
     /**
      * Delete an item
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function delete($id){
         if(Appointments::where('id','=', $id)->first() === null){

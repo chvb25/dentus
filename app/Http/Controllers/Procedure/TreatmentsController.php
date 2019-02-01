@@ -22,7 +22,7 @@ class TreatmentsController extends Controller
     }
 
     public function toRegister(){
-        return view('procedures.treatments-new', ['procedures' => Procedures::where('type','=','P')->get()]);
+        return view('procedures.treatments-new', ['procedures' => Procedures::orderBy('id', 'asc')->get()]);
     }
 
     public  function toUpdate($id){
@@ -37,30 +37,30 @@ class TreatmentsController extends Controller
     /**
      * Register an item
      * @param Request $request
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function save(Request $request){
         $this->validateData($request, '/treatments/new');
 
-        $return = DB::transaction(function () use ($request){            
+        $return = DB::transaction(function () use ($request){
             try {
-                $date = DateTime::createFromFormat('d/m/Y', $request->date);        
+                $date = DateTime::createFromFormat('d/m/Y', $request->date);
                 $usableDate = $date->format('Y-m-d');
-                
+
                 $treatments = new Treatments();
                 $treatments->patients_id = $request->patient_id;
                 $treatments->quote_id = 0;
-                $treatments->date = $usableDate;                
+                $treatments->date = $usableDate;
                 $treatments->sub_total = $request->subtotal;
                 $treatments->discount = $request->discount;
-                $treatments->final_price = $request->total;                
+                $treatments->final_price = $request->total;
                 $treatments->status = 0;
                 $treatments->save();
-                
+
                 $item = 1;
                 foreach ($request->dynamic as $items) {
                     if (count($request->dynamic) == 1 && $items == "") break;
-                    $values = \explode('-', $items);                    
+                    $values = \explode('-', $items);
                     $q_detail = new Treatments_Detail();
                     $q_detail->id = $item;
                     $q_detail->treatments_id = $treatments->id;
@@ -77,7 +77,7 @@ class TreatmentsController extends Controller
             }catch (\Exception $e){
                 DB::rollback();
                 error_log('Transaction error : '. $e->getMessage());
-                Session::push('error','Transaction error.');                
+                Session::push('error','Transaction error.');
                 return '/treatments/new/';
             }
         });
@@ -90,31 +90,31 @@ class TreatmentsController extends Controller
      * Update an item
      * @param Request $request
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function update(Request $request, $id){
         $this->validateData($request, '/treatments-edit/'. $id);
 
         $return =DB::transaction(function () use ($request, $id){
             try {
-                $date = DateTime::createFromFormat('d/m/Y', $request->date);        
+                $date = DateTime::createFromFormat('d/m/Y', $request->date);
                 $usableDate = $date->format('Y-m-d');
-                
+
                 $treatments = Treatments::findOrFail($id);
                 $treatments->patients_id = $request->patient_id;
                 $treatments->quote_id = $request->quote_id;
-                $treatments->date = $usableDate;                
+                $treatments->date = $usableDate;
                 $treatments->sub_total = $request->subtotal;
                 $treatments->discount = $request->discount;
-                $treatments->final_price = $request->total;                
+                $treatments->final_price = $request->total;
                 $treatments->status = $request->status;
                 $treatments->save();
-                
+
                 Treatments_Detail::where('treatments_id', '=', $id)->delete();
                 $item = 1;
                 foreach ($request->dynamic as $items) {
                     if (count($request->dynamic) == 1 && $items == "") break;
-                    $values = \explode('-', $items);                    
+                    $values = \explode('-', $items);
                     $q_detail = new Treatments_Detail();
                     $q_detail->id = $item;
                     $q_detail->treatments_id = $treatments->id;
@@ -140,7 +140,7 @@ class TreatmentsController extends Controller
     /**
      * Delete an item
      * @param $id
-     * @return reditect to de list of the object
+     * @return redirect to de list of the object
      */
     public function delete($id){
         if(Procedures::where('id','=', $id)->first() === null){
@@ -148,8 +148,8 @@ class TreatmentsController extends Controller
         }else{
 
             $return =DB::transaction(function () use ($id){
-                try {                    
-                    
+                try {
+
                     $detail = Treatments_Detail::where(['treatments_id', '=', $id], ['status', '=', 0])->get();
 
                     if($detail){
@@ -162,12 +162,12 @@ class TreatmentsController extends Controller
                         Session::push('success','Deleted data.');
                         DB::commit();
                         return '/treatments';
-                    }                    
+                    }
                 }catch (Exception $e){
                     Session::push('error','Transaction error.');
                     DB::rollback();
                     return '/treatments-edit/'. $id;
-                }                
+                }
             });
             return redirect($return);
         }
@@ -177,56 +177,56 @@ class TreatmentsController extends Controller
      * Autocomplete the patient search for appointments
      * @return \Illuminate\Http\Response
      */
-    public function searchTreatment(Request $request){  
-        try {         
+    public function searchTreatment(Request $request){
+        try {
 
             $data = Patients::where('completeName', 'LIKE', "%{$request->input('query')}%")
-            ->join('treatments', 'patients.id', '=', 'treatments.patients_id')            
+            ->join('treatments', 'patients.id', '=', 'treatments.patients_id')
             ->where('treatments.status', '<>', '1')
             ->groupBy('patients.id', 'patients.completeName')
             ->select('patients.id', 'patients.completeName')->get();
-                        
+
             return response()->json($data);
-        } catch (\Throwable $th) {            
+        } catch (\Throwable $th) {
             error_log($th->getMessage());
-        }        
+        }
     }
 
     /**
      * Autocomplete the patient search for appointments
      * @return \Illuminate\Http\Response
      */
-    public function viewTreatmentDetail(Request $request){  
-        try {         
-            
-            $det = DB::table('treatments_detail')            
+    public function viewTreatmentDetail(Request $request){
+        try {
+
+            $det = DB::table('treatments_detail')
             ->join('procedures', 'treatments_detail.procedure_id', '=', 'procedures.id')
             ->where('treatments_detail.treatments_id','=',$request->input('query'))
             ->select('procedures.id', 'procedures.name', 'treatments_detail.status')->get();
-            
+
             return new JsonResponse($det);
-        } catch (\Throwable $th) {            
+        } catch (\Throwable $th) {
             error_log($th->getMessage());
-        }        
+        }
     }
 
     /**
      * Autocomplete the patient search for appointments
      * @return \Illuminate\Http\Response
      */
-    public function searchTreatmentDetail(Request $request){  
-        try {         
-            
+    public function searchTreatmentDetail(Request $request){
+        try {
+
             $det = DB::table('treatments_detail')
             ->join('treatments', 'treatments_detail.treatments_id', 'treatments.id')
             ->join('procedures', 'treatments_detail.procedure_id', '=', 'procedures.id')
             ->where([['treatments.patients_id','=',$request->input('query')], ['treatments_detail.status', '<>', '1']])
             ->select('procedures.id', 'procedures.name', 'treatments_detail.treatments_id')->get();
-            
+
             return new JsonResponse($det);
-        } catch (\Throwable $th) {            
+        } catch (\Throwable $th) {
             error_log($th->getMessage());
-        }        
+        }
     }
 
     /**
