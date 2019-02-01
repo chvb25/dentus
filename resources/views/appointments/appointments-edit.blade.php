@@ -169,6 +169,7 @@
 @section('custom_scripts')
     <link href="{{ asset('assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
     <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }} "></script>
+    <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js') }}"></script>
     <link href="{{ asset('assets/extra-libs/clockpicker/bootstrap-clockpicker.min.css') }}" rel="stylesheet"/>
     <script src="{{ asset('assets/extra-libs/clockpicker/bootstrap-clockpicker.min.js') }} "></script>
 
@@ -182,7 +183,8 @@
             format: 'dd/mm/yyyy',
             startDate: '+0d',
             orientation:'bottom',
-            todayBtn: "linked"
+            todayBtn: "linked",
+            language: "es"
         });
 
         $('#datepicker_t').datepicker({
@@ -191,7 +193,8 @@
             format: 'dd/mm/yyyy',
             startDate: '+0d',
             orientation:'bottom',
-            todayBtn: "linked"
+            todayBtn: "linked",
+            language: "es"
         });
 
         $('.startTime').clockpicker({
@@ -240,7 +243,7 @@
             },
             templates: {
                 empty: [
-                    '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
+                    '<div class="list-group search-results-dropdown"><div class="list-group-item">No se encontraron datos.</div></div>'
                 ],
                 header: [
                     '<div class="list-group search-results-dropdown">'
@@ -270,7 +273,7 @@
             },
             templates: {
                 empty: [
-                    '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
+                    '<div class="list-group search-results-dropdown"><div class="list-group-item">No se encontraron datos.</div></div>'
                 ],
                 header: [
                     '<div class="list-group search-results-dropdown">'

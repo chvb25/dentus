@@ -113,11 +113,13 @@
 
     <link href="{{ asset('assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
     <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }} "></script>
+    <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js') }}"></script>
     <script type="text/javascript">
         jQuery('#datepicker').datepicker({
             autoclose: true,
             todayHighlight: true,
-            format: 'dd/mm/yyyy'
+            format: 'dd/mm/yyyy',
+            language: "es"
         });
     </script>
 @endsection

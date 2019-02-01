@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
+<html dir="ltr" lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -7,10 +7,10 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="VillachSoftware">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::to('assets/images/favicon.png') }}">
-    <title>Dentus</title>
+    <title>DentUS</title>
     <!-- Custom CSS -->
     @yield('custom_css')
 

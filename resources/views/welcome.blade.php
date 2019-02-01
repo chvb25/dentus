@@ -21,7 +21,7 @@
             <div class="col-7">
                 <div class="card">
                     <div class="card-body" style="display:inline !important;">
-                        <h4>Agenda <span id="newDate">today</span> <button type="button" class="btn btn-cyan" style="float:right;" onclick="addAppointment()"><i class="fas fa-plus"></i> Add</button></h4>
+                        <h4>Agenda <span id="newDate">today</span> <button type="button" class="btn btn-cyan" style="float:right;" onclick="addAppointment()"><i class="fas fa-plus"></i> Nuevo</button></h4>
                     </div>
                     <ul class="list-style-none" id="appointment_list">
                     </ul>
@@ -137,6 +137,9 @@
 
 <link rel="stylesheet" href="{{ asset('assets/libs/toastr/build/toastr.min.css') }}">
 <script src=" {{ asset('assets/libs/toastr/build/toastr.min.js') }} "></script>
+<script src="{{ asset('assets/libs/fullcalendar/dist/locale/es.js') }}"></script>
+<script src="{{ asset('assets/libs/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js') }}"></script>
+
 
 <script type="text/javascript">
 
@@ -145,6 +148,7 @@ $(function () {
     d.setDate(d.getDate() - 1);
     updateDate(d);
     $('#calendar').fullCalendar({
+        lang: 'es',
         defaultView: 'month',
         handleWindowResize: true,
         selectable: true,
@@ -166,7 +170,8 @@ $(function () {
         format: 'dd/mm/yyyy',
         startDate: '+1d',
         orientation:'bottom',
-        todayBtn: "linked"
+        todayBtn: "linked",
+        language: "es"
     });
 
     $('.startTime').clockpicker({
@@ -216,7 +221,8 @@ function updateActionCancelForm(element, event){
 function updateDate(newDate){
     newDate.setDate(newDate.getDate() + 1);
     var date = newDate.getFullYear() + "-" + (newDate.getMonth()+1) + "-" + newDate.getDate();
-    $('#newDate').text(newDate.toDateString());
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    $('#newDate').text(newDate.toLocaleDateString('es', options));
     $.ajax({
         url: '{{ route('appointmentsByDate') }}'+'?query='+date,
         type: 'get',

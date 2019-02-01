@@ -126,6 +126,7 @@
 @section('custom_scripts')
 <link href="{{ asset('assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
 <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }} "></script>
+<script src="{{ asset('assets/libs/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js') }}"></script>
 <link rel="stylesheet" href="{{ asset('assets/libs/toastr/build/toastr.min.css') }}">
 <script src=" {{ asset('assets/libs/toastr/build/toastr.min.js') }} "></script>
 <script>
@@ -135,7 +136,8 @@
         format: 'dd/mm/yyyy',
         startDate: '+0d',
         orientation:'bottom',
-        todayBtn: "linked"
+        todayBtn: "linked",
+        language: "es"
     });
 
     $('.verify').change(function(){
@@ -171,13 +173,13 @@
             }
             $('#process').val(1);
         } catch (error) {
-            toastr.error('You must set the parameters before to calculate the quotas.')
+            toastr.error('Debes llenar los parámetros antes de calcular las cuotas.')
         }
 
     }
     function verifyQuotas(){
         if($('#process').val() == 0){
-            toastr.warning('You must calculate the quotas first.');
+            toastr.warning('Debes calcular las cuotas primero.');
             return false;
         }
         return true;
