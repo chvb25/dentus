@@ -56,7 +56,12 @@
                             <div class="form-group row justify-content-start">
                                 <label for="tax" class="col-sm-2 text-right control-label col-form-label label-required">Impuesto</label>
                                 <div class="col-sm-5">
-                                    <input type="number" min="0" class="form-control" name="tax" value="{{ $setting->tax }}" required>
+                                    <div class="input-group">
+                                        <input type="number" min="0" class="form-control" name="tax" placeholder="0.00" value="{{ $setting->tax }}" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">%</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
