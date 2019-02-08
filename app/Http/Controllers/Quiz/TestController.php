@@ -14,6 +14,16 @@ use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
         return view('quiz.test', ['data' => Test::orderBy('id', 'asc')->get()]);
     }
@@ -25,6 +35,10 @@ class TestController extends Controller
     public  function toUpdate($id){
         $test = Test::findOrFail($id);
         return view('quiz.test-edit', ['test' => $test]);
+    }
+
+    public function quiz(){
+        return view('quiz.quiz', ['test'=> Test::first()]);
     }
 
     /**
@@ -40,9 +54,9 @@ class TestController extends Controller
         $qt->description = $request->description === null ? '':$request->description ;
         $qt->save();
 
-        Session::push('success','Saved data.');
+        Session::push('success', 'Se ha realizado el registro correctamente.');
         if ($request->nqt)
-            return redirect('/questions/'. $qt->id);
+            return redirect('//questions/'. $qt->id);
         else
             return redirect('/test');
     }
@@ -55,7 +69,7 @@ class TestController extends Controller
      */
     public function update(Request $request, $id){
         if(Test::where('id','=', $id)->first() === null){
-            Session::push('error','Element not found.');
+            Session::push('error','No se ha encontrado el registro.');
         }else{
             $this->validateData($request, '/test-eidt/'. $id);
 
@@ -64,7 +78,7 @@ class TestController extends Controller
             $qt->description = $request->description;
             $qt->save();
         }
-        Session::push('success','Updated data.');
+        Session::push('success', 'Se ha actualizado el registro correctamente.');
         return redirect('/test');
     }
 
@@ -75,10 +89,10 @@ class TestController extends Controller
      */
     public function delete($id){
         if(Test::where('id','=', $id)->first() === null){
-            Session::push('error','Element not found.');
+            Session::push('error','No se ha encontrado el registro.');
         }else{
             Test::findOrFail($id)->delete();
-            Session::push('success','Deleted data.');
+            Session::push('success', 'Se ha eliminado el registro correctamente.');
         }
         return redirect('/test');
     }

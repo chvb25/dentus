@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @include('libs.tables_styles')
 @include('libs.tables_script')
 @section('content')
@@ -42,7 +42,7 @@
                                         <th role="row"><?php echo $index; ?></th>
                                         <td>{{ $rows->patient->completeName }}</td>
                                         <td>{{ date('d/m/Y', strtotime($rows->date)) }}</td>
-                                        <td>{{ $rows->final_price }}</td>
+                                        <td>{{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}&nbsp;{{ $rows->final_price }}</td>
                                         <td class="actions">
                                             <button type="button" class="btn btn-cyan" data-itemid="{{ $rows->id }}" onclick="searchDetail(this)"><i class="fa fa-eye"></i> Detalle</button>
                                             <button type="submit" class="btn btn-primary delete" onclick="location.href='quotes-edit/{{ $rows->id }}'">

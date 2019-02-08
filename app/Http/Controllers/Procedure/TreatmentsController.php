@@ -16,6 +16,15 @@ use DateTime;
 
 class TreatmentsController extends Controller
 {
+ /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index(){
         return view('procedures.treatments', ['data' => Treatments::orderBy('id', 'asc')->get()]);
@@ -70,14 +79,14 @@ class TreatmentsController extends Controller
                     $item++;
                 }
 
-                Session::push('success', 'Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
                 return '/treatments';
 
             }catch (\Exception $e){
                 DB::rollback();
-                error_log('Transaction error : '. $e->getMessage());
-                Session::push('error','Transaction error.');
+                error_log('Error en la transaccion : '. $e->getMessage());
+                Session::push('error','Error en la transacción.');
                 return '/treatments/new/';
             }
         });
@@ -124,11 +133,11 @@ class TreatmentsController extends Controller
                     $item++;
                 }
 
-                Session::push('success', 'Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
                 return '/treatments';
             }catch (Exception $e){
-                Session::push('error','Transaction error.');
+                Session::push('error','Error en la transacción.');
                 DB::rollback();
                 return '/treatments-edit/'. $id;
             }
@@ -144,7 +153,7 @@ class TreatmentsController extends Controller
      */
     public function delete($id){
         if(Procedures::where('id','=', $id)->first() === null){
-            Session::push('error','Element not found.');
+            Session::push('error','No se ha encontrado el registro.');
         }else{
 
             $return =DB::transaction(function () use ($id){
@@ -159,12 +168,12 @@ class TreatmentsController extends Controller
                     }else{
                         Treatments_Detail::where('treatments_id', '=', $id)->delete();
                         Treatments::where('id', '=', $id)->delete();
-                        Session::push('success','Deleted data.');
+                        Session::push('success', 'Se ha eliminado el registro correctamente.');
                         DB::commit();
                         return '/treatments';
                     }
                 }catch (Exception $e){
-                    Session::push('error','Transaction error.');
+                    Session::push('error','Error en la transacción.');
                     DB::rollback();
                     return '/treatments-edit/'. $id;
                 }

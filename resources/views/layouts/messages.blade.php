@@ -4,7 +4,7 @@
 @if(Session::has('success'))
     <script>
         @foreach(Session::pull('success') as $message)
-            toastr.success( "{{ $message }}", "Success!");
+            toastr.success( "{{ $message }}", "Registro Exitoso!");
         @endforeach
     </script>
 @endif
@@ -13,7 +13,7 @@
 @if(Session::has('info'))
     <script>
         @foreach(Session::pull('info') as $message)
-            toastr.info( "{{ $message }}", "Information");
+            toastr.info( "{{ $message }}", "Información:");
         @endforeach
     </script>
 @endif
@@ -22,7 +22,7 @@
 @if(Session::has('warning'))
     <script>
         @foreach(Session::pull('warning') as $message)
-            toastr.warning( "{{ $message }}", "Oops!");
+            toastr.warning( "{{ $message }}", "¡Advertencia!");
         @endforeach
     </script>
 @endif
@@ -36,11 +36,11 @@
                 message += "{{ $error }}<br/>";
             @endforeach
             message = message.substring(0, message.length - 5);
-            toastr.error(message, 'Something went wrong!', {fadeAway: 10000});
+            toastr.error(message, '¡Algo ha salio mal!', {fadeAway: 10000});
             {{ var_dump(Session::forget('error')) }};
-        @elseif(Session::has('warning'))
-            @foreach(Session::pull('warning') as $message)
-                toastr.warning( "{{ $message }}", "Oops!");
+        @elseif(Session::has('error'))
+            @foreach(Session::pull('error') as $message)
+                toastr.error( "{{ $message }}", "¡Error!");
             @endforeach
         @endif
     </script>

@@ -14,16 +14,26 @@ use DateTime;
 
 class AppointmentsController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
-        return view('appointments.appointments', ['data' => Appointments::orderBy('date', 'asc')->orderBy('start_time', 'asc')->get()]);
-    }    
+        return view('appointments.appointments', ['data' => Appointments::orderBy('date', 'desc')->orderBy('start_time', 'asc')->get()]);
+    }
 
     public function toRegister(){
         return view('appointments.appointments-new');
     }
 
     public  function toUpdate($id){
-        $appointment = Appointments::findOrFail($id);     
+        $appointment = Appointments::findOrFail($id);
         return view('appointments.appointments-edit', ['appointment' => $appointment]);
     }
 
@@ -36,67 +46,67 @@ class AppointmentsController extends Controller
     public function save(Request $request){
         $this->validateData($request, '/appointments/new');
 
-        $return = DB::transaction(function () use ($request){            
+        $return = DB::transaction(function () use ($request){
             try {
-                $date = DateTime::createFromFormat('d/m/Y', $request->date);        
+                $date = DateTime::createFromFormat('d/m/Y', $request->date);
                 $usableDate = $date->format('Y-m-d');
-                
+
                 $appointment = new Appointments();
                 $appointment->treatments_id = $request->patient_id;
                 $appointment->procedure_id = 0;
-                $appointment->date = $usableDate;                
+                $appointment->date = $usableDate;
                 $appointment->start_time = $request->startTime;
-                $appointment->end_time = $request->endTime;                
+                $appointment->end_time = $request->endTime;
                 $appointment->status = 0;
-                $appointment->save();                               
+                $appointment->save();
 
-                Session::push('success', 'Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
                 return '/appointments';
 
             }catch (\Exception $e){
                 DB::rollback();
-                error_log('Transaction error : '. $e->getMessage());
-                Session::push('error','Transaction error.');                
+                error_log('Error en la transaccion : '. $e->getMessage());
+                Session::push('error','Error en la transacción.');
                 return '/appointments/new/';
             }
         });
 
         return redirect($return);
     }
-    
+
     /**
      * Register an item
      * @param Request $request
      * @return redirect to de list of the object
      */
-    public function saveWithTreatment(Request $request){        
+    public function saveWithTreatment(Request $request){
         error_log('save : '. $request);
 
-        $return = DB::transaction(function () use ($request){            
+        $return = DB::transaction(function () use ($request){
             try {
-                $date = DateTime::createFromFormat('d/m/Y', $request->date_t);        
+                $date = DateTime::createFromFormat('d/m/Y', $request->date_t);
                 $usableDate = $date->format('Y-m-d');
-                
+
                 $splitId = explode('-', $request->procedures);
 
                 $appointment = new Appointments();
                 $appointment->treatments_id = $splitId[1];
                 $appointment->procedure_id = $splitId[0];
-                $appointment->date = $usableDate;                
+                $appointment->date = $usableDate;
                 $appointment->start_time = $request->startTime_t;
-                $appointment->end_time = $request->endTime_t;                
+                $appointment->end_time = $request->endTime_t;
                 $appointment->status = 0;
-                $appointment->save();                               
+                $appointment->save();
 
-                Session::push('success', 'Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
                 return '/appointments';
 
             }catch (\Exception $e){
                 DB::rollback();
-                error_log('Transaction error : '. $e->getMessage());
-                Session::push('error','Transaction error.');                
+                error_log('Error en la transaccion : '. $e->getMessage());
+                Session::push('error','Error en la transacción.');
                 return '/appointments/new/';
             }
         });
@@ -116,23 +126,23 @@ class AppointmentsController extends Controller
 
         $return =DB::transaction(function () use ($request, $id){
             try {
-                $date = DateTime::createFromFormat('d/m/Y', $request->date);        
+                $date = DateTime::createFromFormat('d/m/Y', $request->date);
                 $usableDate = $date->format('Y-m-d');
-                
+
                 $appointment = Appointments::findOrFail($id);
                 $appointment->treatments_id = $request->treatments_id;
                 $appointment->procedure_id = 0;
-                $appointment->date = $usableDate;                
+                $appointment->date = $usableDate;
                 $appointment->start_time = $request->startTime;
-                $appointment->end_time = $request->endTime;                
+                $appointment->end_time = $request->endTime;
                 $appointment->status = 0;
-                $appointment->save();      
+                $appointment->save();
 
-                Session::push('success', 'Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
                 return '/appointments';
             }catch (Exception $e){
-                Session::push('error','Transaction error.');
+                Session::push('error','Error en la transacción.');
                 DB::rollback();
                 return '//appointments-edit/'. $id;
             }
@@ -148,27 +158,27 @@ class AppointmentsController extends Controller
      * @return redirect to de list of the object
      */
     public function updateWithTreatment(Request $request, $id){
-        
+
         $return =DB::transaction(function () use ($request, $id){
             try {
-                $date = DateTime::createFromFormat('d/m/Y', $request->date_t);        
-                $usableDate = $date->format('Y-m-d');                
-                $splitId = explode('-', $request->procedures);                             
+                $date = DateTime::createFromFormat('d/m/Y', $request->date_t);
+                $usableDate = $date->format('Y-m-d');
+                $splitId = explode('-', $request->procedures);
 
                 $appointment = Appointments::findOrFail($id);
                 $appointment->treatments_id = $splitId[1];
                 $appointment->procedure_id = $splitId[0];
-                $appointment->date = $usableDate;                
+                $appointment->date = $usableDate;
                 $appointment->start_time = $request->startTime_t;
-                $appointment->end_time = $request->endTime_t;                
+                $appointment->end_time = $request->endTime_t;
                 $appointment->status = 0;
-                $appointment->save();      
+                $appointment->save();
 
-                Session::push('success', 'Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
                 return '/appointments';
             }catch (Exception $e){
-                Session::push('error','Transaction error.');
+                Session::push('error','Error en la transacción.');
                 DB::rollback();
                 return '//appointments-edit/'. $id;
             }
@@ -184,25 +194,25 @@ class AppointmentsController extends Controller
      * @return redirect to de list of the object
      */
     public function reschedule(Request $request, $id){
-        
+
         $return =DB::transaction(function () use ($request, $id){
             try {
-                $date = DateTime::createFromFormat('d/m/Y', $request->date);        
+                $date = DateTime::createFromFormat('d/m/Y', $request->date);
                 $usableDate = $date->format('Y-m-d');
-                
-                $appointment = Appointments::findOrFail($id);                
-                $appointment->date = $usableDate;                
+
+                $appointment = Appointments::findOrFail($id);
+                $appointment->date = $usableDate;
                 $appointment->start_time = $request->startTime;
-                $appointment->end_time = $request->endTime;                
+                $appointment->end_time = $request->endTime;
                 $appointment->save();
 
-                Session::push('success', 'Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
-                return '/';
+                return '/main';
             }catch (Exception $e){
-                Session::push('error','Transaction error.');
+                Session::push('error','Error en la transacción.');
                 DB::rollback();
-                return '/';
+                return '/main';
             }
         });
 
@@ -216,21 +226,21 @@ class AppointmentsController extends Controller
      * @return redirect to de list of the object
      */
     public function cancel($id){
-        
+
         $return =DB::transaction(function () use ($id){
             try {
-                                
-                $appointment = Appointments::findOrFail($id);                
+
+                $appointment = Appointments::findOrFail($id);
                 $appointment->status = 2;
                 $appointment->save();
 
-                Session::push('success', 'Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
-                return '/';
+                return '/main';
             }catch (Exception $e){
-                Session::push('error','Transaction error.');
+                Session::push('error','Error en la transacción.');
                 DB::rollback();
-                return '/';
+                return '/main';
             }
         });
 
@@ -244,16 +254,16 @@ class AppointmentsController extends Controller
      */
     public function delete($id){
         if(Appointments::where('id','=', $id)->first() === null){
-            Session::push('error','Element not found.');
+            Session::push('error','No se ha encontrado el registro.');
         }else{
             $return =DB::transaction(function () use ($id){
-                try {                    
+                try {
                     Appointments::where('id', '=', $id)->delete();
-                    Session::push('success','Deleted data.');
+                    Session::push('success', 'Se ha eliminado el registro correctamente.');
                     DB::commit();
                     return '/appointments';
                 }catch (Exception $e){
-                    Session::push('error','Transaction error.');
+                    Session::push('error','Error en la transacción.');
                     DB::rollback();
                     return '//appointments/';
                 }
@@ -266,9 +276,9 @@ class AppointmentsController extends Controller
         try{
             $date = Appointments::where('date', '=', $request->input('query'))->orderBy('start_time', 'asc')->get();
             return new JsonResponse($date);
-        } catch (\Throwable $th) {            
+        } catch (\Throwable $th) {
             error_log($th->getMessage());
-        }   
+        }
     }
 
     /**
@@ -279,7 +289,7 @@ class AppointmentsController extends Controller
      */
     private function validateData(Request $request, $redirect){
         $validator = Validator::make($request->all(),
-            ['name'=>'required|min:5|max:50', 'date'=>'required|date|date_format:d/m/Y', 
+            ['name'=>'required|min:5|max:50', 'date'=>'required|date|date_format:d/m/Y',
             'startTime' => 'required|date_format:H:i', 'endTime' => 'required|date_format:H:i']);
         if($validator->fails()){
             Session::push('error','message');

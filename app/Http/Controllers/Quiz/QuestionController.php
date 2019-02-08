@@ -15,6 +15,16 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index($test_id){
         return view('quiz.question', ['data' => Question::orderBy('id', 'asc')->where('test_id','=', $test_id)->get(), 'test_id'=>$test_id]);
     }
@@ -52,11 +62,12 @@ class QuestionController extends Controller
                     $answer->save();
                 }
 
-                Session::push('success','Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
                 return '/questions/'. $request->input('test_id');
             }catch (\Exception $e){
-                Session::push('error','Transaction error.');
+                Session::push('error','Error en la transacción.');
+                error_log('Error en la transaccion : '. $e->getMessage());
                 DB::rollback();
                 return '/question/new/'. $request->test_id;
             }
@@ -74,7 +85,7 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id){
         if(Question::where('id','=', $id)->first() === null){
-            Session::push('error','Element not found.');
+            Session::push('error','No se ha encontrado el registro.');
         }else{
             $this->validateData($request, '/question-edit/'. $id.'/'. $request->input('test_id'));
 
@@ -96,11 +107,11 @@ class QuestionController extends Controller
 
                             $answer->save();
                         }
-                    Session::push('success','Updated data.');
+                    Session::push('success', 'Se ha actualizado el registro correctamente.');
                     DB::commit();
                     return '/questions/'. $request->test_id;
                 }catch (Exception $e){
-                    Session::push('error','Transaction error.');
+                    Session::push('error','Error en la transacción.');
                     DB::rollback();
                     return '/question-edit/'. $id;
                 }
@@ -116,11 +127,11 @@ class QuestionController extends Controller
      */
     public function delete($id, $test_id){
         if(Question::where('id','=', $id)->first() === null){
-            Session::push('error','Element not found.');
+            Session::push('error','No se ha encontrado el registro.');
         }else{
             Question::findOrFail($id)->delete();
             Answer::where('question_id', "=", $id)->delete();
-            Session::push('success','Deleted data.');
+            Session::push('success', 'Se ha eliminado el registro correctamente.');
         }
         return redirect('/questions/'. $test_id);
     }

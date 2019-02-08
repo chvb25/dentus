@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @section('content')
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -40,7 +40,7 @@
                             <div class="form-group row justify-content-start">
                                 <label for="description" class="col-sm-2 text-right control-label col-form-label"></label>
                                 <div class="col-sm-5">
-                                    <a href="/questions/{{ $test->id }}" class="btn btn-default"><i class="fas fa-question"></i> See questions</a>
+                                    <a href="/questions/{{ $test->id }}" class="btn btn-default"><i class="fas fa-question"></i> Ver preguntas</a>
                                 </div>
                             </div>
                         </div>

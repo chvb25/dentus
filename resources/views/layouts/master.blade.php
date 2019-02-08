@@ -42,7 +42,7 @@
                 <!-- ============================================================== -->
                 <!-- Logo -->
                 <!-- ============================================================== -->
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand" href="{{ url('main') }}">
                     <!-- Logo icon -->
                     <b class="logo-icon p-l-10">
                         <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -82,7 +82,7 @@
                 <!-- toggle and nav items -->
                 <!-- ============================================================== -->
                 <ul class="navbar-nav mr-auto" style="margin: 0 auto;">
-                    <li class="nav-item"><span class="client-name">Clinica asdf</span></li>
+                    <li class="nav-item"><span class="client-name">{{ (Session::exists('settings')) ? Session::get('settings')->clinic_name : 'Clinica sin nombre' }}</span></li>
                 </ul>
                 <!-- ============================================================== -->
                 <!-- Right side toggle and nav items -->
@@ -94,9 +94,12 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ URL::to('assets/images/users/1.jpg') }}" alt="user" class="rounded-circle" width="31"></a>
                         <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                            <a class="dropdown-item" href="{{ url('setting') }}"><i class="ti-settings m-r-5 m-l-5"></i> Setting</a>
+                            <a class="dropdown-item" href="{{ url('/user-view') }}"><i class="ti-user m-r-5 m-l-5"></i> Ver perfil <br> {{ \Auth::user()->name }}</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                            <a class="dropdown-item" href="{{ url('/users') }}"><i class="mdi mdi-account-plus m-r-5 m-l-5"></i> Lista de Usuarios</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ url('setting') }}"><i class="ti-settings m-r-5 m-l-5"></i> Configuración</a>
+                            <a class="dropdown-item" href="{{ url('logout') }}"><i class="fa fa-power-off m-r-5 m-l-5"></i> Cerrar Sesión</a>
                         </div>
                     </li>
                     <!-- ============================================================== -->
@@ -195,7 +198,7 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer text-center">
-            Todos los derechos reservados por VillageSoftware. Diseñado y desarrollado por <a target="_blank" href="http://villafani.com">VillachSoftware</a>.
+            Todos los derechos reservados por VillachSoftware. Diseñado y desarrollado por <a target="_blank" href="http://villafani.com">VillachSoftware</a>.
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->
@@ -225,8 +228,8 @@
 <script src="{{ asset('js/sidebarmenu.js') }}"></script>
 <!--Custom JavaScript -->
 <script src="{{ asset('js/custom.min.js') }}"></script>
-<script src="{{ asset('assets/extra-libs/typeahead/typeahead.js') }}">
-@include('messages')
+<script src="{{ asset('assets/extra-libs/typeahead/typeahead.js') }}"></script>
+@include('layouts.messages')
 
 @yield('custom_scripts')
 </body>

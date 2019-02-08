@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 
 @section('content')
     <!-- ============================================================== -->
@@ -30,15 +30,15 @@
                         <div class="col-md-12">
                             <div class="pull-left">
                                 <address>
-                                    <h3> &nbsp;<b class="text-danger">Clinic Name</b></h3>
-                                    <p class="text-muted m-l-5">Address
+                                    <h3> &nbsp;<b class="text-danger">{{ (Session::exists('settings')) ? Session::get('settings')->clinic_name : 'Clinica sin nombre' }}</b></h3>
+                                    <p class="text-muted m-l-5">{{ (Session::exists('settings')) ? Session::get('settings')->clinic_address : 'Sin dirección' }}
                                     </p>
                                 </address>
                             </div>
                             <div class="pull-right text-right">
-                                <h3>To,</h3>
+                                <h3>Paciente,</h3>
                                 <h4 class="font-bold">{{ $attention->completeName }}</h4>
-                                <p><b>Date :</b> <i class="fa fa-calendar"></i> {{ date('dS M Y') }}</p>
+                                <p><b>Fecha :</b> <i class="fa fa-calendar"></i> {{ date('d M Y') }}</p>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -61,8 +61,8 @@
                                                 <td class="text-center"><?php echo $index; ?></td>
                                                 <td>{{ $item->procedure->name }}</td>
                                                 <td class="text-right">{{ $attention->tooth }} </td>
-                                                <td class="text-right"> {{ number_format((float)($item->price), 2, '.', '') }} </td>
-                                                <td class="text-right"> {{ number_format((float)($item->price * sizeof($teeth)), 2, '.', '') }} </td>
+                                                <td class="text-right">{{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }} {{ number_format((float)($item->price), 2, '.', '') }} </td>
+                                                <td class="text-right">{{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }} {{ number_format((float)($item->price * sizeof($teeth)), 2, '.', '') }} </td>
                                                 <?php $subTotal += ($item->price * sizeof($teeth)); ?>
                                             </tr>
                                         @endforeach
@@ -72,10 +72,10 @@
                         </div>
                         <div class="col-md-12">
                             <div class="pull-right m-t-30 text-right">
-                                <p>Sub - Total amount: $<?php echo number_format((float)$subTotal, 2, '.', ''); ?></p>
-                                <p>vat (10%) : $<?php $vat = ($subTotal * 0.1); echo number_format((float)$vat, 2, '.', '');  ?> </p>
+                                <p>Sub-Total : {{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}&nbsp;$<?php echo number_format((float)$subTotal, 2, '.', ''); ?></p>
+                                <p>vat ({{ Session::get('settings')->tax }}%) : {{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}&nbsp;<?php $vat = ($subTotal * (Session::get('settings')->tax)/100); echo number_format((float)$vat, 2, '.', '');  ?> </p>
                                 <hr>
-                                <h3><b>Total :</b> $<?php $total = $subTotal - $vat; echo(number_format((float)$total, 2, '.', '')); ?></h3>
+                                <h3><b>Total :</b> {{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}&nbsp;$<?php $total = $subTotal - $vat; echo(number_format((float)$total, 2, '.', '')); ?></h3>
                             </div>
                             <div class="clearfix"></div>
                             <hr>

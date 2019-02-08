@@ -16,19 +16,29 @@ use DateTime;
 
 class QuoteController extends Controller
 {
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
         return view('procedures.quotes', ['data' => Quote::where('status', '=', '1')->orderBy('id', 'asc')->get()]);
     }
 
     public function toRegister(){
-        return view('procedures.quotes-new', ['procedures' => Procedures::where('type','=','P')->get()]);
+        return view('procedures.quotes-new', ['procedures' => Procedures::orderBy('id', 'asc')->get()]);
     }
 
     public  function toUpdate($id){
         $quote = Quote::findOrFail($id);
         $procedures_id = Quote_Detail::where('quote_id', '=', $id)->select('procedure_id')->get();
         return view('procedures.quotes-edit', ['quote' => $quote,
-            'procedures' => DB::table('procedures')->where('type', '=', 'P')->whereNotIn('id', $procedures_id)->get(),
+            'procedures' => DB::table('procedures')->whereNotIn('id', $procedures_id)->get(),
             'detail'=> DB::table('quote_detail')->join('procedures', 'quote_detail.procedure_id', '=', 'procedures.id')->where('quote_id','=',$id)->select('procedures.*')->get()]);
     }
 
@@ -40,24 +50,24 @@ class QuoteController extends Controller
     public function save(Request $request){
         $this->validateData($request, '/quotes/new');
 
-        $return = DB::transaction(function () use ($request){            
+        $return = DB::transaction(function () use ($request){
             try {
-                $date = DateTime::createFromFormat('d/m/Y', $request->date);        
+                $date = DateTime::createFromFormat('d/m/Y', $request->date);
                 $usableDate = $date->format('Y-m-d');
-                
+
                 $quote = new Quote();
                 $quote->patient_id = $request->patient_id;
-                $quote->date = $usableDate;                
+                $quote->date = $usableDate;
                 $quote->sub_total = $request->subtotal;
                 $quote->discount = $request->discount;
-                $quote->final_price = $request->total;                
+                $quote->final_price = $request->total;
                 $quote->status = true;
                 $quote->save();
-                
+
                 $item = 1;
                 foreach ($request->dynamic as $items) {
                     if (count($request->dynamic) == 1 && $items == "") break;
-                    $values = \explode('-', $items);                    
+                    $values = \explode('-', $items);
                     $q_detail = new Quote_Detail();
                     $q_detail->id = $item;
                     $q_detail->quote_id = $quote->id;
@@ -67,13 +77,13 @@ class QuoteController extends Controller
                     $item++;
                 }
 
-                Session::push('success', 'Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
                 return '/quotes';
 
             }catch (\Exception $e){
                 DB::rollback();
-                Session::push('error','Transaction error.');                
+                Session::push('error','Error en la transacción.');
                 return '/quotes/new/';
             }
         });
@@ -90,10 +100,10 @@ class QuoteController extends Controller
      */
     public function update(Request $request, $id){
         error_log('update');
-        $this->validateData($request, '/quotes-edit//'. $id);        
+        $this->validateData($request, '/quotes-edit//'. $id);
 
         $return =DB::transaction(function () use ($request, $id){
-            $date = DateTime::createFromFormat('d/m/Y', $request->date);        
+            $date = DateTime::createFromFormat('d/m/Y', $request->date);
             $usableDate = $date->format('Y-m-d');
 
             try {
@@ -105,7 +115,7 @@ class QuoteController extends Controller
                 $quote->discount = $request->discount;
                 $quote->final_price = $request->total;
                 $quote->status = true;
-                $quote->save();                
+                $quote->save();
 
                 Quote_Detail::where('quote_id', '=', $id)->delete();
                 $item = 1;
@@ -121,14 +131,14 @@ class QuoteController extends Controller
                     $item++;
                 }
 
-                Session::push('success','Updated data.');
+                Session::push('success', 'Se ha actualizado el registro correctamente.');
                 DB::commit();
                 return '/quotes';
             }catch (Exception $e){
-                Session::push('error','Transaction error.');
+                Session::push('error','Error en la transacción.');
                 DB::rollback();
                 error_log($e->getMessage());
-                return '/quotes-edit//'. $id;                
+                return '/quotes-edit//'. $id;
             }
         });
 
@@ -142,17 +152,17 @@ class QuoteController extends Controller
      */
     public function delete($id){
         if(Quote::where('id','=', $id)->first() === null){
-            Session::push('error','Element not found.');
+            Session::push('error','No se ha encontrado el registro.');
         }else{
             $return =DB::transaction(function () use ($id){
                 try {
                     Quote::findOrFail($id)->delete();
                     Quote_Detail::where('quote_id', '=', $id)->delete();
-                    Session::push('success','Deleted data.');
+                    Session::push('success', 'Se ha eliminado el registro correctamente.');
                     DB::commit();
                     return '/quotes';
                 }catch (Exception $e){
-                    Session::push('error','Transaction error.');
+                    Session::push('error','Error en la transacción.');
                     DB::rollback();
                     return '/quotes';
                 }
@@ -165,16 +175,16 @@ class QuoteController extends Controller
      * Autocomplete the patient search for appointments
      * @return \Illuminate\Http\Response
      */
-    public function searchQuoteDetail(Request $request){  
-        try {         
-            
+    public function searchQuoteDetail(Request $request){
+        try {
+
             $det = DB::table('quote_detail')->join('procedures', 'quote_detail.procedure_id', '=', 'procedures.id')
             ->where('quote_detail.quote_id','=',$request->input('query'))->select('procedures.name')->get();
-            
+
             return new JsonResponse($det);
-        } catch (\Throwable $th) {            
+        } catch (\Throwable $th) {
             error_log($th->getMessage());
-        }        
+        }
     }
 
     /**
@@ -183,15 +193,15 @@ class QuoteController extends Controller
      * @param array $redirect
      * @return mixed the address to be redirected with errors
      */
-    private function validateData(Request $request, $redirect){   
+    private function validateData(Request $request, $redirect){
         error_log($request);
         $validator = Validator::make($request->all(),
             ['name'=>'required|max:50', 'total'=>'required|numeric|min:0.01']);
 
         if($validator->fails()){
-            Session::push('error','message');            
+            Session::push('error','message');
             return redirect($redirect)->withInput()->withErrors($validator);
         }
     }
-  
+
 }

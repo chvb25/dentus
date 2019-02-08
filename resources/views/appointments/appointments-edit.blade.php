@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @section('content')
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -79,7 +79,7 @@
                                                 <option value="0" disabled selected hidden>Seleccione un procedimiento</option>
                                                 @if ($appointment->procedure_id>0)
                                                     @foreach ($appointment->treatment->details as $item)
-                                                        <option value="{{ $item->procedure->id }}" {{ $item->procedure->id == $appointment->procedure_id ? 'selected' : ''}} >{{ $item->procedure->name }}</option>
+                                                        <option value="{{ $item->procedure->id }}-{{ $appointment->treatment->id }}" {{ $item->procedure->id == $appointment->procedure_id ? 'selected' : ''}} >{{ $item->procedure->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -172,9 +172,6 @@
     <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js') }}"></script>
     <link href="{{ asset('assets/extra-libs/clockpicker/bootstrap-clockpicker.min.css') }}" rel="stylesheet"/>
     <script src="{{ asset('assets/extra-libs/clockpicker/bootstrap-clockpicker.min.js') }} "></script>
-
-    <link rel="stylesheet" href="{{ asset('assets/libs/toastr/build/toastr.min.css') }}">
-    <script src=" {{ asset('assets/libs/toastr/build/toastr.min.js') }} "></script>
 
     <script type="text/javascript">
         $('#datepicker').datepicker({

@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @section('content')
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -43,14 +43,14 @@
                                 <label for="currency" class="col-sm-2 text-right control-label col-form-label label-required">Moneda</label>
                                 <div class="col-sm-5">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="currency" maxlength="4" value="{{ $setting->currency }}" required>
+                                        <input type="text" class="form-control" name="currency" maxlength="191" value="{{ $setting->currency }}" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row justify-content-start">
-                                <label for="symbol" class="col-sm-2 text-right control-label col-form-label label-required">Abreviación</label>
+                                <label for="symbol" class="col-sm-2 text-right control-label col-form-label label-required">Simbolo de la moneda</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="symbol" value="{{ $setting->symbol }}" required>
+                                    <input type="text" class="form-control" name="symbol" maxlength="4" value="{{ $setting->symbol }}" required>
                                 </div>
                             </div>
                             <div class="form-group row justify-content-start">
@@ -65,7 +65,7 @@
                                 <div class="form-group row justify-content-center">
                                     <div class="col-sm-3">
                                         <button type="submit" class="btn btn-success"><i class="mdi mdi-content-save"></i> Guardar</button>
-                                        <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/'"><i class="mdi mdi-undo"></i> Cancelar</button>
+                                        <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/main'"><i class="mdi mdi-undo"></i> Cancelar</button>
                                     </div>
                                 </div>
                             </div>

@@ -10,10 +10,38 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::get('/main', 'HomeController@main')->name('main');
+
+/*
+|--------------------------------------------------------------------------
+| Users
+|--------------------------------------------------------------------------
+*/
+Route::get('/register-user', 'Auth\RegisterController@register')->name('register');
+
+Route::put('password/reset', 'Auth\ResetPasswordController@reset' );
+
+Route::get('users', 'Settings\UserController@index');
+
+Route::get('user/new', 'Settings\UserController@toRegister');
+
+Route::get('user-edit/{id}', 'Settings\UserController@toUpdate');
+
+Route::get('user-view', 'Settings\UserController@viewProfile');
+
+Route::put('/save-user', 'Settings\UserController@save');
+
+Route::put('update-user/{id}', 'Settings\UserController@update');
+
+Route::delete('user/delete/{id}', 'Settings\UserController@delete');
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +82,7 @@ Route::delete('question/delete/{id}/{test_id}', 'Quiz\QuestionController@delete'
 |--------------------------------------------------------------------------
 | Answers Section
 |--------------------------------------------------------------------------
-*/
+*//*
 Route::get('answers', 'Quiz\AnswerController@index');
 
 Route::get('answer/new', 'Quiz\AnswerController@toRegister');
@@ -66,7 +94,7 @@ Route::post('/save-answer', 'Quiz\AnswerController@save');
 Route::put('/update-answer/{id}', 'Quiz\AnswerController@update');
 
 Route::delete('answer/delete/{id}', 'Quiz\AnswerController@delete');
-
+*/
 /*
 |--------------------------------------------------------------------------
 | Quiz Section
@@ -83,6 +111,8 @@ Route::post('/save-test', 'Quiz\TestController@save');
 Route::put('/update-test/{id}', 'Quiz\TestController@update');
 
 Route::delete('test/delete/{id}', 'Quiz\TestController@delete');
+
+Route::get('quiz', 'Quiz\TestController@quiz');
 
 /*
 |--------------------------------------------------------------------------
@@ -102,6 +132,8 @@ Route::put('/update-patients/{id}', 'Patients\PatientsController@update');
 Route::delete('patients/delete/{id}', 'Patients\PatientsController@delete');
 
 Route::get('patients/autocomplete', 'Patients\PatientsController@searchPatient')->name('patientList');
+
+Route::get('odontogram/getTeeth', 'Patients\OdontogramController@getTeeth')->name('teeth');
 
 /*
 |--------------------------------------------------------------------------
@@ -227,6 +259,6 @@ Route::get('payment_plan', 'Cashier\Payment_PlanController@index');
 | Setting
 |--------------------------------------------------------------------------
 */
-Route::get('setting', 'SettingController@index');
+Route::get('setting', 'Settings\SettingController@index');
 
-Route::put('save-setting', 'SettingController@save');
+Route::put('save-setting', 'Settings\SettingController@save');

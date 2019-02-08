@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @include('libs.tables_styles')
 @include('libs.tables_script')
 @section('content')
@@ -44,7 +44,7 @@
                                         <td>{{ $rows->attention->completeName }}</td>
                                         <td>{{ date('d/m/Y', strtotime($rows->created_at)) }}</td>
                                         <td>{{ ($rows->receivable_id == 0) ? '-' : $rows->receivable_id }}</td>
-                                        <td class="text-right">{{ $rows->amount }} $</td>
+                                        <td class="text-right">{{ $rows->amount }} {{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}</td>
                                         <td class="actions">
                                             <button type="submit" class="btn btn-primary" onclick="location.href='cash-edit/{{ $rows->id }}'">
                                                 <i class="fas fa-sync"></i> Modificar

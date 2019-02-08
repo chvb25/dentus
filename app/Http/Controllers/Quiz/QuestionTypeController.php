@@ -11,6 +11,16 @@ use Illuminate\Http\Request;
 
 class QuestionTypeController extends Controller
 {
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
         return view('quiz.question-type', ['data' => Question_Type::orderBy('id', 'asc')->get()]);
     }
@@ -37,7 +47,7 @@ class QuestionTypeController extends Controller
         $qt->language = $request->language;
         $qt->save();
 
-        Session::push('success','Saved data.');
+        Session::push('success', 'Se ha realizado el registro correctamente.');
         return redirect('/question-type');
     }
 
@@ -49,7 +59,7 @@ class QuestionTypeController extends Controller
      */
     public function update(Request $request, $id){
         if(Question_Type::where('id','=', $id)->first() === null){
-            Session::push('error','Element not found.');
+            Session::push('error','No se ha encontrado el registro.');
         }else{
             $this->validateData($request, '/question-type-eidt/'. $id);
 
@@ -58,7 +68,7 @@ class QuestionTypeController extends Controller
             $qt->language = $request->language;
             $qt->save();
         }
-        Session::push('success','Updated data.');
+        Session::push('success', 'Se ha actualizado el registro correctamente.');
         return redirect('/question-type');
     }
 
@@ -69,10 +79,10 @@ class QuestionTypeController extends Controller
      */
     public function delete($id){
         if(Question_Type::where('id','=', $id)->first() === null){
-            Session::push('error','Element not found.');
+            Session::push('error','No se ha encontrado el registro.');
         }else{
             Question_Type::findOrFail($id)->delete();
-            Session::push('success','Deleted data.');
+            Session::push('success', 'Se ha eliminado el registro correctamente.');
         }
         return redirect('/question-type');
     }

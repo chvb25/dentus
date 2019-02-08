@@ -82,7 +82,7 @@
                     var name = group.split('|');
                     $(rows).eq( i ).before(
                         '<tr class="group"><td colspan="2">'+name[0]+'</td>'+
-                        '<td class="text-right">Total '+parseFloat(name[2]).toFixed(2)+'</td>'+
+                        '<td class="text-right">Total ' +name[3]+ ' '+parseFloat(name[2]).toFixed(2)+'</td>'+
                         '<td><button type="submit" class="btn btn-default" onclick="location.href=reschedure/'+name[1]+'"><i class="fas fa-sync"></i> Reprogramar</button></td></tr>'
                     );
                     last = group;

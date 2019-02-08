@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @section('content')
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -134,9 +134,6 @@
 <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }} "></script>
 <link href="{{ asset('assets/extra-libs/clockpicker/bootstrap-clockpicker.min.css') }}" rel="stylesheet"/>
 <script src="{{ asset('assets/extra-libs/clockpicker/bootstrap-clockpicker.min.js') }} "></script>
-
-<link rel="stylesheet" href="{{ asset('assets/libs/toastr/build/toastr.min.css') }}">
-<script src=" {{ asset('assets/libs/toastr/build/toastr.min.js') }} "></script>
 <script src="{{ asset('assets/libs/fullcalendar/dist/locale/es.js') }}"></script>
 <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js') }}"></script>
 
@@ -181,7 +178,7 @@ $(function () {
             var start = new Date (new Date().toDateString() + ' ' + $('#startTime').val());
             var end = new Date (new Date().toDateString() + ' ' + ($('#endTime').val() == '' ? '23:59': $('#endTime').val()));
             if(end < start){
-                toastr.warning('The end time must be later than the start time!');
+                toastr.warning('La hora fin debe ser mayor a la inicial.');
                 $('#startTime').val('');
                 $('#startTime').focus();
             }
@@ -195,7 +192,7 @@ $(function () {
             var start = new Date (new Date().toDateString() + ' ' + $('#startTime').val());
             var end = new Date (new Date().toDateString() + ' ' + $('#endTime').val());
             if(end < start){
-                toastr.warning('The end time must be later than the start time!');
+                toastr.warning('La hora fin debe ser mayor a la inicial.');
                 $('#endTime').val('');
                 $('#endTime').focus();
             }
@@ -245,7 +242,7 @@ function updateDate(newDate){
                     var status = (response[i].status != 0);
                     var path = (status) ? '#' : '/attention/new/'+response[i].id;
 
-                    var row = '<li class="d-flex no-block card-body border-top apointments"><div>'+
+                    var row = '<li class="d-flex no-block card-body border-top apointments"><div style="font-size: 0.9rem;">'+
                                     '<a href="'+ path +'" class="m-b-0 font-medium p-0" '+ (status ? 'style="cursor: no-drop;"': '')+'>'+ patient +'</a>'+
                                     '<span class="text-muted">'+ procedure+'</span>'+
                                     '</div>'+
@@ -254,14 +251,14 @@ function updateDate(newDate){
                                         '<h5 class="text-muted m-b-0 text-right">'+startTime+' - '+ endTime+'</h5>'+
                                         '<button type="submit" class="btn btn-outline-dark reschedule-appointment" data-toggle="modal" onclick="updateActionForm(this, event)"'+
                                         'data-target="#reschedule_item" data-itemid="/reschedule-appointments/'+id+'" data-itemName="'+
-                                        patient+' - '+ procedure+'" '+ (status ? 'disabled style="cursor: no-drop;' : '') +'><i class="far fa-clock"></i> Reprogramar</button>'+
+                                        patient+' - '+ procedure+'" '+ (status ? 'disabled style="cursor: no-drop";' : '') +'><i class="far fa-clock"></i> Reprogramar</button>'+
                                         '<button type="submit" class="btn btn-secondary delete cancel_appointment"  '+ (status ? 'disabled style="cursor: no-drop;' : '') +
                                         ' onclick="updateActionCancelForm(this, event)" data-toggle="modal" data-target="#cancel_appointment" data-itemid="/cancel-appointments/'+id+'"><i class="far fa-calendar-times"></i> Cancelar</button>'+
                                 '</div></div></li>';
                     $("#appointment_list").append(row);
                 }
             }else{
-                var row = '<li class="d-flex no-block card-body border-top apointments"><div>'+
+                var row = '<li class="d-flex no-block card-body border-top apointments"><div style="font-size: 0.9rem;>'+
                                     '<a href="#" class="m-b-0 font-medium p-0">Sin citas</a>'+
                                     '<span class="text-muted"></span>'+
                                     '</div>'+

@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @include('libs.tables_styles')
 @include('libs.tables_script')
 @section('content')
@@ -42,7 +42,7 @@
                                     <tr>
                                         <th role="row"><?php echo $index; ?></th>
                                         <td>{{ $rows->name }}</td>
-                                        <td>{{ $rows->cost }} $</td>
+                                        <td>{{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}&nbsp;{{ $rows->cost }}</td>
                                         <td>{{ ($rows->type == "P") ? 'Cara' : 'Pieza entera' }}</td>
                                         <td><div style="height: 35px; background-color:{{ $rows->color }};"></div></td>
                                         <td class="actions">

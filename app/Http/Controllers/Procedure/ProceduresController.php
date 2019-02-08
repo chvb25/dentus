@@ -11,6 +11,15 @@ use Validator;
 
 class ProceduresController extends Controller
 {
+ /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index(){
         return view('procedures.procedures', ['data' => Procedures::orderBy('id', 'asc')->get()]);
@@ -40,7 +49,7 @@ class ProceduresController extends Controller
         $procedures->color = $request->color;
         $procedures->save();
 
-        Session::push('success','Saved data.');
+        Session::push('success', 'Se ha realizado el registro correctamente.');
         return redirect('/procedures');
     }
 
@@ -52,7 +61,7 @@ class ProceduresController extends Controller
      */
     public function update(Request $request, $id){
         if(Procedures::where('id','=', $id)->first() === null){
-            Session::push('error','Element not found.');
+            Session::push('error','No se ha encontrado el registro.');
         }else{
             $this->validateData($request, '//procedures-edit/'. $id);
 
@@ -64,7 +73,7 @@ class ProceduresController extends Controller
             $procedures->save();
 
         }
-        Session::push('success','Updated data.');
+        Session::push('success', 'Se ha actualizado el registro correctamente.');
         return redirect('/procedures');
     }
 
@@ -75,10 +84,10 @@ class ProceduresController extends Controller
      */
     public function delete($id){
         if(Procedures::where('id','=', $id)->first() === null){
-            Session::push('error','Element not found.');
+            Session::push('error','No se ha encontrado el registro.');
         }else{
             Procedures::findOrFail($id)->delete();
-            Session::push('success','Deleted data.');
+            Session::push('success', 'Se ha eliminado el registro correctamente.');
         }
         return redirect('/procedures');
     }

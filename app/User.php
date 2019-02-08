@@ -10,13 +10,14 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'username', 'password', 'status'
     ];
 
     /**
@@ -27,4 +28,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+     /**
+     * Add a mutator to ensure hashed passwords
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
 }

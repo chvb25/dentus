@@ -19,19 +19,28 @@ use DateTime;
 
 
 class AttentionController extends Controller
-{      
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index(){
         return view('appointments.attention', ['data' => Attention::orderBy('date', 'asc')->get()]);
-    }    
+    }
 
     public function toRegister($id){
-        $appointment = Appointments::findOrFail($id);             
+        $appointment = Appointments::findOrFail($id);
         return view('appointments.attention-new', ['appointment' => $appointment]);
     }
 
     public  function toUpdate($id){
-        $appointment = Attention::findOrFail($id);     
+        $appointment = Attention::findOrFail($id);
         return view('appointments.attention-edit', ['appointment' => $appointment]);
     }
 
@@ -40,11 +49,11 @@ class AttentionController extends Controller
      * @param Request $request
      * @return redirect to de list of the object
      */
-    public function save(Request $request, $id){        
+    public function save(Request $request, $id){
 
-        $return = DB::transaction(function () use ($request, $id){            
+        $return = DB::transaction(function () use ($request, $id){
             try {
-                               
+
                 $appointment = Appointments::findOrFail($id);
                 $appointment->status = 1;
                 $appointment->save();
@@ -56,9 +65,9 @@ class AttentionController extends Controller
                 $attention->date = $appointment->date;
                 $attention->tooth = $request->tooth;
                 $attention->status = $request->status;
-                $attention->save();       
+                $attention->save();
 
-                if($appointment->procedure_id > 0){                       
+                if($appointment->procedure_id > 0){
                     $treatment_detail = Treatments_Detail::where([['treatments_id', '=', $appointment->treatments_id], ['procedure_id', '=',$appointment->procedure_id]])->first();
                     $treatment_detail->status = $request->status;
                     $treatment_detail->save();
@@ -67,23 +76,23 @@ class AttentionController extends Controller
                     $treatment_detail = Treatments_Detail::where('treatments_id', '=', $appointment->treatments_id)->get();
                     $complete = true;
                     foreach ($treatment_detail as $item) {
-                        $complete = $complete && ($item->status == 1);                            
+                        $complete = $complete && ($item->status == 1);
                     }
 
                     $treatment = Treatments::findOrFail($appointment->treatments_id);
                     $treatment->status = ($complete) ? 1 : 2;
-                    $treatment->save(); 
+                    $treatment->save();
                 }
 
-                Session::push('success', 'Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
-                
-                return   ($request->cash == 0) ? '/' : (($request->cash == 1) ? '/cash/new/'. $attention->id. '/0' : '/receivable/new/'. $attention->id);
+
+                return   ($request->cash == 0) ? '/main' : (($request->cash == 1) ? '/cash/new/'. $attention->id. '/0' : '/receivable/new/'. $attention->id);
 
             }catch (\Exception $e){
                 DB::rollback();
-                error_log('Transaction error : '. $e->getMessage());
-                Session::push('error','Transaction error.');                
+                error_log('Error en la transaccion : '. $e->getMessage());
+                Session::push('error','Error en la transacción.');
                 return '/attention/new/'. $id;
             }
         });

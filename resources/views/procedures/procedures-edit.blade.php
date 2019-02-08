@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @section('content')
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -37,7 +37,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="cost" placeholder="0.00" value="{{ $procedure->cost }}" required>
                                         <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">$</span>
+                                            <span class="input-group-text" id="basic-addon2">{{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}</span>
                                         </div>
                                     </div>
                                 </div>

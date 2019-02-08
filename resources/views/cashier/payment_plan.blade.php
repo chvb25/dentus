@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @include('libs.tables_styles')
 @include('libs.tables_script')
 @section('content')
@@ -38,10 +38,10 @@
                                 <tbody>
                                 @foreach($data as $rows)
                                     <tr>
-                                        <td>{{ $rows->receivable->attention->completeName }}|{{ $rows->receivable_id }}|{{ $rows->receivable->amount }}</td>
+                                        <td>{{ $rows->receivable->attention->completeName }}|{{ $rows->receivable_id }}|{{ $rows->receivable->amount }}|{{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}</td>
                                         <td class="text-center">{{ date('d/m/Y', strtotime($rows->date)) }}</td>
                                         <td class="text-danger text-right">{{ (\Carbon\Carbon::now() > \Carbon\Carbon::parse($rows->date) && $rows->status == 0) ? \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($rows->date)): '0' }}</td>
-                                        <td class="text-right">{{ $rows->amount }}</td>
+                                        <td class="text-right">{{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }} {{ $rows->amount }}</td>
                                         <td class="actions" style="width: 88%">
                                             @if ($rows->status == 1)
                                                 <span class="text-success"><i class="fas fa-check"></i> Pagado</span>

@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @include('libs.tables_styles')
 @include('libs.tables_script')
 @section('content')
@@ -45,7 +45,7 @@
                                         <td>{{ $rows->patient->completeName }}</td>
                                         <td>{{ date('d/m/Y', strtotime($rows->date)) }}</td>
                                         <td>{{ $rows->quote_id }}</td>
-                                        <td>{{ $rows->final_price }}</td>
+                                        <td>{{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}&nbsp;{{ $rows->final_price }}</td>
                                         <td class="text-{{ ($rows->status == 0) ? 'warning' : (($rows->status == 1) ? 'success' : 'info') }}">{{ ($rows->status == 0) ? 'No iniciado' : (($rows->status == 1) ? 'Completo' : 'En proceso') }}</td>
                                         <td class="actions">
                                             <button type="submit" class="btn btn-cyan" data-itemid="{{ $rows->id }}" onclick="searchDetail(this)"><i class="fa fa-eye"></i> Detalle</button>

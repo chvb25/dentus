@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @section('content')
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -163,9 +163,6 @@
     <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js') }}"></script>
     <link href="{{ asset('assets/extra-libs/clockpicker/bootstrap-clockpicker.min.css') }}" rel="stylesheet"/>
     <script src="{{ asset('assets/extra-libs/clockpicker/bootstrap-clockpicker.min.js') }} "></script>
-
-    <link rel="stylesheet" href="{{ asset('assets/libs/toastr/build/toastr.min.css') }}">
-    <script src=" {{ asset('assets/libs/toastr/build/toastr.min.js') }} "></script>
 
     <script type="text/javascript">
 

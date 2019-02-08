@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -49,8 +51,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name' => 'required|string|max:191',
+            'username' => 'required|string|max:191|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -64,9 +66,30 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name' => $data[0],
+            'username' => $data[1],
+            'password' => $data[2],
         ]);
+    }
+
+    public function register(Request $request){
+        $return = DB::transaction(function () use ($request){
+            try{
+                $this->validator([$request->name, $request->username, $request->password]);
+                $user = $this->create([$request->name, $request->username, $request->password]);
+                auth()->login($user);
+                $setting = Setting::first();
+                Session::put('settings',$setting);
+                Session::push('info', 'Se ha registrado un nuevo usuario.');
+                DB::commit();
+                return 'main';
+            }catch (\Exception $e){
+                DB::rollback();
+                error_log('Error en la transaccion : '. $e->getMessage());
+                Session::push('error','No se ha completado la transacción.');
+                return '/';
+            }
+        });
+        return redirect($return);
     }
 }

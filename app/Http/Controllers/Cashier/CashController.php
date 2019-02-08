@@ -18,6 +18,15 @@ use DateTime;
 
 class CashController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index(){
         return view('cashier.cash', ['data' => Cash::orderBy('id', 'asc')->get()]);
@@ -46,14 +55,14 @@ class CashController extends Controller
                 $cash->amount = $request->amount;
                 $cash->save();
 
-                Session::push('success', 'Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
-                return '/';
+                return '/main';
 
             }catch (\Exception $e){
                 DB::rollback();
-                error_log('Transaction error : '. $e->getMessage());
-                Session::push('error','Transaction error.');
+                error_log('Error en la transaccion : '. $e->getMessage());
+                Session::push('error','Error en la transacción.');
                 return '/cash/new/'. $attention_id. '/'. $receivable_id;
             }
         });

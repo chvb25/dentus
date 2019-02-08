@@ -18,6 +18,16 @@ use DateTime;
 
 class ReceivableController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function toRegister($attention_id){
         $attention = Attention::findOrFail($attention_id);
         $treatment_det = Treatments_Detail::where([['procedure_id', $attention->procedure_id],['treatments_id',$attention->treatments_id],['status', 1]])->get();
@@ -61,14 +71,14 @@ class ReceivableController extends Controller
                     $item++;
                 }
 
-                Session::push('success', 'Saved data.');
+                Session::push('success', 'Se ha realizado el registro correctamente.');
                 DB::commit();
-                return '/';
+                return '/main';
 
             }catch (\Exception $e){
                 DB::rollback();
-                error_log('Transaction error : '. $e->getMessage());
-                Session::push('error','Transaction error.');
+                error_log('Error en la transaccion : '. $e->getMessage());
+                Session::push('error','Error en la transacción.');
                 return '/receivable/new/'. $attention_id;
             }
         });

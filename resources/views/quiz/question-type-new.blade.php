@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @section('content')
 <!-- ============================================================== -->
 <!-- Bread crumb and right sidebar toggle -->
@@ -45,7 +45,7 @@
                     <div class="border-top">
                         <div class="card-body">
                             <div class="form-group row justify-content-center">
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <button type="submit" class="btn btn-success"><i class="mdi mdi-content-save"></i> Guardar</button>
                                     <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/question-type'"><i class="mdi mdi-undo"></i> Cancelar</button>
                                 </div>

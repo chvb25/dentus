@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 
 @section('content')
     <!-- ============================================================== -->
@@ -7,7 +7,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Attention</h4>
+                <h4 class="page-title">Atención</h4>
             </div>
         </div>
     </div>
@@ -24,21 +24,21 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Information</h4>
+                        <h4 class="card-title">Información</h4>
                         <div class="form-group row justify-content-start">
-                            <label for="name" class="col-sm-2 text-right control-label col-form-label">Patient</label>
+                            <label for="name" class="col-sm-2 text-right control-label col-form-label">Paciente</label>
                             <div class="col-sm-5">
                                 <label class="text-left control-label col-form-label">{{ $appointment->completeName }}</label>
                             </div>
                         </div>
                         <div class="form-group row justify-content-start">
-                            <label for="date" class="col-sm-2 text-right control-label col-form-label">Date</label>
+                            <label for="date" class="col-sm-2 text-right control-label col-form-label">Fecha</label>
                             <div class="col-sm-5">
                                 <label class="text-left control-label col-form-label">{{ date('d/m/Y', strtotime($appointment->date)) }}</label>
                             </div>
                         </div>
                         <div class="form-group row justify-content-start">
-                            <label class="col-sm-2 text-right control-label col-form-label">Procedure</label>
+                            <label class="col-sm-2 text-right control-label col-form-label">Procedimiento</label>
                             <div class="col-sm-5">
                                 <label class="text-left control-label col-form-label">{{ $appointment->procedureName }}</label>
                             </div>
@@ -46,12 +46,12 @@
 
                         @if ($appointment->procedure_id > 0)
                         <div class="form-group row justify-content-start">
-                            <label class="col-sm-2 text-right control-label col-form-label label-required">Status</label>
+                            <label class="col-sm-2 text-right control-label col-form-label label-required">Estado</label>
                             <div class="col-sm-5">
                                 <select name="status" id="status" class="select2 form-control custom-select select2-hidden-accessible">
-                                    <option value="0" disabled selected hidden>Select a Status</option>
-                                    <option value="2">In progess</option>
-                                    <option value="1">Complete</option>
+                                    <option value="0" disabled selected hidden>Seleccione un estado</option>
+                                    <option value="2">En Proceso</option>
+                                    <option value="1">Completo</option>
                                 </select>
                             </div>
                         </div>
@@ -59,33 +59,33 @@
                     </div>
                     <div class="border-top">
                         <div class="card-body">
-                                <h4 class="card-title">Odontogramma</h4>
-                                <div class="pannel-body">
-                                    <input type="hidden" name="tooth" id="tooth" value="0">
-                                    <input type="hidden" id="color" value="{{ $appointment->procedureColor }}">
-                                    <input type="hidden" id="procedureType" value="{{ $appointment->procedureType }}">
-                                    <div class="row">
-                                        <div id="tr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                        </div>
-                                        <div id="tl" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                        </div>
-                                        <div id="tlr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-                                        </div>
-                                        <div id="tll" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                        </div>
+                            <h4 class="card-title">Odontograma</h4>
+                            <div class="pannel-body">
+                                <input type="hidden" name="tooth" id="tooth" value="0">
+                                <input type="hidden" id="color" value="{{ $appointment->procedureColor }}">
+                                <input type="hidden" id="procedureType" value="{{ $appointment->procedureType }}">
+                                <div class="row">
+                                    <div id="tr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                     </div>
-                                    <div class="row">
-                                        <div id="blr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-                                        </div>
-                                        <div id="bll" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                        </div>
-                                        <div id="br" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                        </div>
-                                        <div id="bl" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                        </div>
+                                    <div id="tl" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    </div>
+                                    <div id="tlr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
+                                    </div>
+                                    <div id="tll" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div id="blr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
+                                    </div>
+                                    <div id="bll" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    </div>
+                                    <div id="br" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    </div>
+                                    <div id="bl" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                     <div class="border-top">
                         <div class="card-body">
@@ -94,7 +94,7 @@
                                     <input type="hidden" id="cash" name="cash" value="0">
                                     <button type="submit" id="save" class="btn btn-success" onclick="$('#cash').val(0); return true;"><i class="mdi mdi-content-save"></i> Guardar</button>
                                     <button type="submit" id="save-cash" class="btn btn-success" style="display: none;" data-toggle="modal" data-target="#attention-cash" onclick="return false"><i class="mdi mdi-content-save"></i> Guardar</button>
-                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/'"><i class="mdi mdi-undo"></i> Cancelar</button>
+                                    <button type="button" class="btn btn-danger" onclick="window.location.pathname =  '/main'"><i class="mdi mdi-undo"></i> Cancelar</button>
                                 </div>
                             </div>
                         </div>
@@ -108,17 +108,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="title">Invoice</h5>
+                    <h5 class="modal-title" id="title">Ingreso</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Please select a method of payment.
+                    Por favor seleccione un metodo de pago.
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" onclick="$('#cash').val(1); return true;"><i class="far fa-money-bill-alt"></i> Cash</button>
-                    <button type="submit" class="btn btn-danger" onclick="$('#cash').val(2); return true;"><i class="fas fa-hand-holding-usd"></i> Receivable</button>
+                    <button type="submit" class="btn btn-success" onclick="$('#cash').val(1); return true;"><i class="far fa-money-bill-alt"></i> Efectivo</button>
+                    <button type="submit" class="btn btn-danger" onclick="$('#cash').val(2); return true;"><i class="fas fa-hand-holding-usd"></i> Por cuotas</button>
                 </div>
             </div>
         </div>

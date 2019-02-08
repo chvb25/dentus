@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 @section('content')
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -49,7 +49,7 @@
                                     <select name="procedures" id="procedures" class="select2 form-control custom-select select2-hidden-accessible">
                                         <option value="0" disabled selected hidden>Seleccione un Procedimiento - Precio</option>
                                         @foreach( $procedures as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }} - {{ $item->cost }}</option>
+                                            <option value="{{ $item->id }}">{{ $item->name }} - {{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}&nbsp;{{ $item->cost }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -62,7 +62,7 @@
                                         @foreach( $detail as $item)
                                             <tr id="row{{ $item->id }}">
                                                 <td>{{ $item->name }}</td>
-                                                <td>{{ $item->cost }}</td>
+                                                <td>{{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}&nbsp;{{ $item->cost }}</td>
                                                 <td><div class="btn_remove" id="{{ $item->id }}"><i class="mdi mdi-close text-danger"></i><input type="hidden" name="dynamic[]" value="{{ $item->id }}-{{ $item->cost }}"></div></td></tr>
                                         @endforeach
                                         </tbody>
@@ -74,7 +74,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="subtotal" id="subtotal" value="{{ $quote->sub_total }}" readonly>
                                         <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">$</span>
+                                            <span class="input-group-text" id="basic-addon2">{{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="discount" name="discount" value="{{ $quote->discount }}">
                                         <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">$</span>
+                                            <span class="input-group-text" id="basic-addon2">{{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="total" name="total" value="{{ $quote->final_price }}" readonly>
                                         <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">$</span>
+                                            <span class="input-group-text" id="basic-addon2">{{ (Session::exists('settings')) ? Session::get('settings')->symbol : '$' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -141,13 +141,13 @@
                 var strUser = e.options[e.selectedIndex].text;
                 var name = strUser.split("-")[0].trim();
                 var cost = strUser.split("-")[1].trim();
+                var number = cost.substring(2);
                 $('#dynamic_field').append('<tr id="row'+e.options[e.selectedIndex].value
                     +'"><td>'+name+'</td><td>'+cost+'</td><td><div class="btn_remove" id="'
                     +e.options[e.selectedIndex].value+'"><i class="mdi mdi-close text-danger"></i><input type="hidden" name="dynamic[]" value="'
-                    +e.options[e.selectedIndex].value+'-'+cost+'"></div></td></tr>');
-
+                    +e.options[e.selectedIndex].value+'-'+number+'"></div></td></tr>');
                 $('#procedures option[value="'+e.options[e.selectedIndex].value+'"]').remove();
-                var subtotal = parseFloat($('#subtotal').val()) + parseFloat(cost);
+                var subtotal = parseFloat($('#subtotal').val()) + parseFloat(number);
                 $('#subtotal').val( parseFloat(subtotal).toFixed(2) );
 
                 calcTotal();
